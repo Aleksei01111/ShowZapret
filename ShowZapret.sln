@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zapret", "Zapret\Zapret.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App\App.csproj", "{33CEE043-4813-409B-8239-254FBF58D088}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestParser", "TestParser\TestParser.csproj", "{A47DFDB7-3A65-4DF5-8FD6-9DF304C3550B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{33CEE043-4813-409B-8239-254FBF58D088}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33CEE043-4813-409B-8239-254FBF58D088}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33CEE043-4813-409B-8239-254FBF58D088}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A47DFDB7-3A65-4DF5-8FD6-9DF304C3550B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A47DFDB7-3A65-4DF5-8FD6-9DF304C3550B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A47DFDB7-3A65-4DF5-8FD6-9DF304C3550B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A47DFDB7-3A65-4DF5-8FD6-9DF304C3550B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
