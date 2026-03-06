@@ -59,34 +59,50 @@ public class TextParser
 
 public class SequenceFinder
 {
-    public bool SequenceWordsIsNextFromThreshold
-    (List<Sentence> text, int startSentenceIndex, int startWordIndex, List<Word> comparableWords,
-        int thresholdWordsInPercent, bool useRegister = false)
+    public bool SequenceWordsIsNextFromThreshold(
+        List<Sentence> text,
+        int startSentenceIndex,
+        int startWordIndex,
+        List<Word> comparableWords,
+        int thresholdWordsInPercent,
+        bool useRegister = false)
     {
-        var comparableWordsEdited = new List<Word>(comparableWords);
+        var wordsCounts = new Dictionary<string, int>();
         var rightWords = 0;
-        var wordsRightInPercent = 0.0;
 
-        for (var i = startSentenceIndex; i < text.Count; i++)
+        var requiredWords =
+            (int)Math.Ceiling(comparableWords.Count * thresholdWordsInPercent / 100.0);
+
+        foreach (var w in comparableWords)
         {
-            for (var j = startWordIndex; j < text[i].Count; j++)
+            var key = useRegister ? w.Value : w.Value.ToLowerInvariant();
+
+            if (wordsCounts.TryGetValue(key, out var count))
+                wordsCounts[key] = count + 1;
+            else
+                wordsCounts[key] = 1;
+        }
+
+        for (int i = startSentenceIndex; i < text.Count; i++)
+        {
+            var jStart = (i == startSentenceIndex) ? startWordIndex : 0;
+
+            for (int j = jStart; j < text[i].Count; j++)
             {
-                var indexOfFound = WordsFinder.ContainsInList(comparableWordsEdited, text[i][j], useRegister);
-                if (indexOfFound != -1)
+                var value = text[i][j].Value;
+                var key = useRegister ? value : value.ToLowerInvariant();
+
+                if (wordsCounts.TryGetValue(key, out var count) && count > 0)
                 {
-                    comparableWordsEdited.RemoveAt(indexOfFound);
+                    wordsCounts[key] = count - 1;
                     rightWords++;
+
+                    if (rightWords >= requiredWords)
+                        return true;
                 }
-
-                wordsRightInPercent = (Convert.ToDouble(rightWords) / comparableWords.Count) * 100;
-
-                if (wordsRightInPercent >= thresholdWordsInPercent)
-                    return true;
             }
         }
 
-        if (wordsRightInPercent >= thresholdWordsInPercent)
-            return true;
         return false;
     }
 }

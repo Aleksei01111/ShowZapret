@@ -183,11 +183,11 @@ public class Tests
     [Test]
     public void NextRightWordsInSimpleText()
     {
-        var rawText = "Привет Z. V. O. Как дела?";
+        var rawText = "Привет Z. z. V. O. Как дела?";
         var parser = new TextParser(rawText, ['.', '?'], [' ']);
         var text = parser.Parse();
         
-        var rightSequence = new List<Word> {new("Z"), new("V"), new("O")};
+        var rightSequence = new List<Word> {new("z"), new("z"), new("v"), new("o")};
         
         var sequenceFinder = new SequenceFinder();
 
@@ -205,7 +205,7 @@ public class Tests
         var parser = new TextParser(rawText, ['.', '?'], [' ']);
         var text = parser.Parse();
         
-        var rightSequence = new List<Word> {new("Z"), new("Z"), new("V"), new("O")};
+        var rightSequence = new List<Word> {new("z"), new("z"), new("v"), new("o")};
         
         var sequenceFinder = new SequenceFinder();
         var actual = sequenceFinder.SequenceWordsIsNextFromThreshold(text, 0,0, rightSequence, 100);
