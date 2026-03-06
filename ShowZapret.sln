@@ -1,8 +1,28 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextProcess", "TextProcess\TextProcess.csproj", "{BB1F631B-784B-4981-885A-CA7213358E89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zapret", "Zapret\Zapret.csproj", "{BEA0575D-2690-4B38-9EB8-BE207CAB8816}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App\App.csproj", "{33CEE043-4813-409B-8239-254FBF58D088}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB1F631B-784B-4981-885A-CA7213358E89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB1F631B-784B-4981-885A-CA7213358E89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB1F631B-784B-4981-885A-CA7213358E89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB1F631B-784B-4981-885A-CA7213358E89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEA0575D-2690-4B38-9EB8-BE207CAB8816}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEA0575D-2690-4B38-9EB8-BE207CAB8816}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEA0575D-2690-4B38-9EB8-BE207CAB8816}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEA0575D-2690-4B38-9EB8-BE207CAB8816}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33CEE043-4813-409B-8239-254FBF58D088}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33CEE043-4813-409B-8239-254FBF58D088}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33CEE043-4813-409B-8239-254FBF58D088}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33CEE043-4813-409B-8239-254FBF58D088}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
