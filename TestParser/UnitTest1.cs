@@ -31,6 +31,16 @@ public class Tests
         
         Assert.That(result.Count, Is.EqualTo(0));
     }
+
+    [Test]
+    public void ParseTextWithoutSentenceSeparators()
+    {
+        var parser = new TextParser("Привет, как у тебя дела?", [], [' ']);
+
+        var textParsed = parser.Parse();
+        
+        Assert.That(textParsed.Count, Is.EqualTo(1));
+    }
     
     [Test]
     public void Parse_OneSimpleSentence_CorrectlySplitWords()
@@ -147,5 +157,39 @@ public class Tests
             Assert.That(actual3, Is.True);
             Assert.That(actual4, Is.False);
         });
+    }
+
+    [Test]
+    public void FindNextWordInSentence()
+    {
+        var wordProcess = new WordsProcess();
+        var sentencesProcess = new SentencesProcess();
+
+        var text = "Привет как у тебя дела войнушка?";
+        var parser = new TextParser(text, ['?'], [' ']);
+
+        var sentence = parser.Parse()[0];
+        
+        var actual = sentencesProcess.FindWordInSentence(sentence, "Война", 1, 0.4, true, wordProcess);
+        
+        Assert.That(actual, Is.Not.Null);
+        Assert.That(actual.Value, Is.EqualTo("войнушка"));
+    }
+    
+    [Test]
+    public void FindPreviousWordInSentence()
+    {
+        var wordProcess = new WordsProcess();
+        var sentencesProcess = new SentencesProcess();
+
+        var text = "Привет войнушка как у тебя дела?";
+        var parser = new TextParser(text, ['?'], [' ']);
+
+        var sentence = parser.Parse()[0];
+        
+        var actual = sentencesProcess.FindWordInSentence(sentence, "Война", 4, 0.4, false, wordProcess);
+        
+        Assert.That(actual, Is.Not.Null);
+        Assert.That(actual.Value, Is.EqualTo("войнушка"));
     }
 }

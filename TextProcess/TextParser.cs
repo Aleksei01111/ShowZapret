@@ -57,6 +57,33 @@ public class TextParser
     }
 }
 
+public class SentencesProcess
+{
+    public Word? FindWordInSentence(Sentence sentence, string word, 
+        int startIndex, double threshold, bool isNext, WordsProcess wordsProcess)
+    {
+        var step = 1;
+        var iterationsCount = sentence.Count - 1 - startIndex;
+
+        if (!isNext)
+        {
+            step = -1;
+            iterationsCount = startIndex;
+        }
+
+        for (var i = 1; i <= iterationsCount; i++)
+        {
+            var offset = i * step;
+            var currentWord = sentence[startIndex + offset];
+            
+            if(wordsProcess.CompareByTrigram(currentWord, new Word(word), threshold))
+                return currentWord;
+        }
+
+        return null;
+    }
+}
+
 public class WordsProcess
 {
     public bool CompareByTrigram(Word word1, Word word2, double threshold)

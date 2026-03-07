@@ -13,14 +13,4 @@ public class Word
     {
         return Value;
     }
-
-    public override int GetHashCode()
-    {
-        return Value.GetHashCode();
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return Value == ((Word?)obj)?.Value;
-    }
 }
