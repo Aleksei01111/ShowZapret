@@ -57,124 +57,38 @@ public class TextParser
     }
 }
 
-public class SequenceFinder
+public class WordsProcess
 {
-    public bool SequenceWordsIsNextFromThreshold(
-        List<Sentence> text,
-        int startSentenceIndex,
-        int startWordIndex,
-        List<Word> comparableWords,
-        int thresholdWordsInPercent,
-        bool useRegister = false)
+    public bool CompareByTrigram(Word word1, Word word2, double threshold)
     {
-        var wordsCounts = new Dictionary<string, int>();
-        var rightWords = 0;
+        var valueWord1 = word1.Value;
+        var valueWord2 = word2.Value;
+        
+        valueWord1 = PrepareString(valueWord1);
+        valueWord2 = PrepareString(valueWord2);
+        
+        var word1Trigram = GetTrigrams(valueWord1);
+        var word2Trigram = GetTrigrams(valueWord2);
 
-        var requiredWords =
-            (int)Math.Ceiling(comparableWords.Count * thresholdWordsInPercent / 100.0);
+        if (word1Trigram.Count == 0 || word2Trigram.Count == 0) return false;
 
-        foreach (var w in comparableWords)
-        {
-            var key = useRegister ? w.Value : w.Value.ToLowerInvariant();
+        var intersection = word1Trigram.Count(x => word2Trigram.Contains(x));
+        var union = word1Trigram.Count + word2Trigram.Count - intersection;
 
-            if (wordsCounts.TryGetValue(key, out var count))
-                wordsCounts[key] = count + 1;
-            else
-                wordsCounts[key] = 1;
-        }
-
-        for (int i = startSentenceIndex; i < text.Count; i++)
-        {
-            var jStart = (i == startSentenceIndex) ? startWordIndex : 0;
-
-            for (int j = jStart; j < text[i].Count; j++)
-            {
-                var value = text[i][j].Value;
-                var key = useRegister ? value : value.ToLowerInvariant();
-
-                if (wordsCounts.TryGetValue(key, out var count) && count > 0)
-                {
-                    wordsCounts[key] = count - 1;
-                    rightWords++;
-
-                    if (rightWords >= requiredWords)
-                        return true;
-                }
-            }
-        }
-
-        return false;
-    }
-}
-
-public class WordsFinder
-{
-    public bool IsNextInText(List<Sentence> text, int startIndexOfSentence, int startIndexOfWord, Word comparableWord, bool useRegister = false)
-    {
-        for (var i = startIndexOfSentence; i < text.Count; i++)
-        {
-            for (var j = startIndexOfWord + 1; j < text[i].Count; j++)
-            {
-                if (CompareTwoWords(comparableWord, text[i][j], useRegister))
-                    return true;
-            }
-        }
-
-        return false;
-    }
-    
-    public bool IsPreviousInText(List<Sentence> text, int startIndexOfSentence, int startIndexOfWord, Word comparableWord, bool useRegister = false)
-    {
-        for (var i = startIndexOfSentence; i >= 0; i--)
-        {
-            for (var j = startIndexOfWord - 1; j >= 0; j--)
-            {
-                if (CompareTwoWords(comparableWord, text[i][j], useRegister))
-                    return true;
-            }
-        }
-
-        return false;
-    }
-    
-    public bool IsNextInCurrentSentence(Sentence sentence, int startWordIndex, Word comparableWord, bool useRegister = false)
-    {
-        for (var i = startWordIndex + 1; i < sentence.Count; i++)
-        {
-            if (CompareTwoWords(comparableWord, sentence[i], useRegister))
-                return true;
-        }
-
-        return false;
-    }
-    
-    public bool IsPreviousInCurrentSentence(Sentence sentence, int startWordIndex, Word comparableWord, bool useRegister = false)
-    {
-        for (var i = startWordIndex - 1; i >= 0; i--)
-        {
-            if (CompareTwoWords(comparableWord, sentence[i], useRegister))
-                return true;
-        }
-
-        return false;
+        return ((double)intersection / union) >= threshold - 1e-9;
     }
 
-    internal static bool CompareTwoWords(Word word1, Word word2, bool useRegister)
-    {
-        if ((useRegister && word1.Value == word2.Value) ||
-            string.Equals(word1.Value, word2.Value, StringComparison.CurrentCultureIgnoreCase))
-            return true;
-        return false;
-    }
+    private string PrepareString(string s) => s.ToLowerInvariant();
 
-    internal static int ContainsInList(List<Word> words, Word comparableWord, bool useRegister)
+    private HashSet<string> GetTrigrams(string s)
     {
-        for (var i = 0; i < words.Count; i++)
+        var result = new HashSet<string>();
+
+        for (var i = 0; i < s.Length - 3; i++)
         {
-            if ((useRegister && words[i].Value == comparableWord.Value)
-                || string.Equals(words[i].Value, comparableWord.Value, StringComparison.OrdinalIgnoreCase))
-                return i;
+            result.Add(s.Substring(i, 3));
         }
-        return -1;
+        
+        return result;
     }
 }

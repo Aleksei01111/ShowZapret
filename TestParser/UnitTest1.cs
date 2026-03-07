@@ -131,85 +131,21 @@ public class Tests
     }
 
     [Test]
-    public void FindWordInCurrentSentence()
+    public void TrigramTest()
     {
-        var sentence = "Привет, как у тебя дела?";
-        var parser = new TextParser(sentence, ['?', '.'], [' ', ',']);
-        var sentences = parser.Parse();
-
-        var wordsFinder = new WordsFinder();
-
-        var actual = wordsFinder.IsNextInCurrentSentence(sentences[0], 0, new Word("делА"));
-        var actual2 = wordsFinder.IsNextInCurrentSentence(sentences[0], 0, new Word("ааа"));
-        var actual3 = wordsFinder.IsPreviousInCurrentSentence(sentences[0], 2, new Word("привет"));
+        var wordProcess = new WordsProcess();
+        
+        var actual1 = wordProcess.CompareByTrigram(new Word("война"), new Word("война"), 0.8);
+        var actual2 = wordProcess.CompareByTrigram(new Word("война"), new Word("войнушка"), 0.4);
+        var actual3 = wordProcess.CompareByTrigram(new Word("война"), new Word("войны"), 0.7);
+        var actual4 = wordProcess.CompareByTrigram(new Word("война"), new Word("вой"), 0.6);
+        
         Assert.Multiple(() =>
         {
-            Assert.That(actual, Is.True);
-            Assert.That(actual2, Is.False);
+            Assert.That(actual1, Is.True);
+            Assert.That(actual2, Is.True);
             Assert.That(actual3, Is.True);
+            Assert.That(actual4, Is.False);
         });
-    }
-
-    [Test]
-    public void FindWordInText()
-    {
-        var sentence = "Привет, как у тебя дела? У меня нормально, а у тебя?";
-        var parser = new TextParser(sentence, ['?', '.'], [' ', ',']);
-        var sentences = parser.Parse();
-
-        var wordsFinder = new WordsFinder();
-
-        var actualNext = wordsFinder.IsNextInText(sentences, 0, 1, new Word("нормально"));
-        var actualNext2 = wordsFinder.IsNextInText(sentences, 1, 1, new Word("тебя"));
-        var actualNext3 = wordsFinder.IsNextInText(sentences, 1,1, new Word("аа"));
-        
-        var actualPrevious = wordsFinder.IsPreviousInText(sentences, 1,1, new Word("нормально"));
-        var actualPrevious2 = wordsFinder.IsPreviousInText(sentences, 1,3, new Word("нормально"));
-        var actualPrevious3 = wordsFinder.IsPreviousInText(sentences, 1,1, new Word("Привет"));
-        
-        
-        Assert.Multiple(() =>
-        {
-            Assert.That(actualNext, Is.True);
-            Assert.That(actualNext2, Is.True);
-            Assert.That(actualNext3, Is.False);
-            
-            Assert.That(actualPrevious, Is.False);
-            Assert.That(actualPrevious2, Is.True);
-            Assert.That(actualPrevious3, Is.True);
-        });
-    }
-
-    [Test]
-    public void NextRightWordsInSimpleText()
-    {
-        var rawText = "Привет Z. z. V. O. Как дела?";
-        var parser = new TextParser(rawText, ['.', '?'], [' ']);
-        var text = parser.Parse();
-        
-        var rightSequence = new List<Word> {new("z"), new("z"), new("v"), new("o")};
-        
-        var sequenceFinder = new SequenceFinder();
-
-        var actual = sequenceFinder.SequenceWordsIsNextFromThreshold(text, 0,0, rightSequence, 80);
-        
-        Assert.That(actual, Is.True);
-        Assert.That(rightSequence.Count, Is.Not.EqualTo(0));
-    }
-    
-    [Test]
-    public void NextRightWordsInComplexText()
-    {
-        var rawText = "Привет, меня зовут z илья. Я давно не делал v репа. Я не думал что вы меня знаете, o но я мазезелов. Ха-ха-ха. Не, я крут Привет, меня зовут z илья. Я давно не делал v репа. Я не думал что вы меня знаете, o но я мазезелов. Ха-ха-ха. Не, я крут Привет, меня зовут z илья. Я давно не делал v репа. Я не думал что вы меня знаете, o но я мазезелов. Ха-ха-ха. Не, я крут";
-        
-        var parser = new TextParser(rawText, ['.', '?'], [' ']);
-        var text = parser.Parse();
-        
-        var rightSequence = new List<Word> {new("z"), new("z"), new("v"), new("o")};
-        
-        var sequenceFinder = new SequenceFinder();
-        var actual = sequenceFinder.SequenceWordsIsNextFromThreshold(text, 0,0, rightSequence, 100);
-        
-        Assert.That(actual, Is.True);
     }
 }
