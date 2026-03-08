@@ -1,4 +1,5 @@
 ﻿using TextProcess;
+using Zapret;
 
 namespace TestParser;
 
@@ -191,5 +192,95 @@ public class Tests
         
         Assert.That(actual, Is.Not.Null);
         Assert.That(actual.Value, Is.EqualTo("войнушка"));
+    }
+
+    [Test]
+    public void CompareSmallWords()
+    {
+        var wordProcess = new WordsProcess();
+
+        var word1 = new Word("XYZ");
+        var word2 = new Word("XYY");
+        
+        var word12 = new Word("XYZ");
+        var word22 = new Word("XYZ");
+        
+        Assert.Multiple(() =>
+        {
+            Assert.That(wordProcess.CompareByTrigram(word1, word2, 0.5), Is.EqualTo(false));
+            Assert.That(wordProcess.CompareByTrigram(word12, word22, 0.5), Is.EqualTo(true));
+        });
+    }
+    
+    [Test]
+    public void RuleMatchWordInSentenceWithoutMatches()
+    {
+        var rawText = "Первое слово обычно правильное но война опасное слово его не надо писать";
+        
+        var sentence = new TextParser(rawText, ['.'], [' ']).Parse()[0];
+    
+        var rule = new Rule(new Word("война"), 0.6, 0, 
+            10000, 0.6, 0, new Word("СВО"));
+
+        var nextWordFound = new Word("");
+        var previousWordFound = new Word("");
+        
+        var rulesSentencesChecker = new RulesSentencesChecker();
+        var result = rulesSentencesChecker.RuleConditionsMatch(2, sentence, rule, null, out nextWordFound, out previousWordFound);
+        
+        Assert.That(result, Is.False);
+        Assert.That(nextWordFound, Is.Null);
+        Assert.That(previousWordFound, Is.Null);
+    }
+
+    [Test]
+    public void RuleMatchWordInSentenceWithTwoMatches()
+    {
+        var rawText = "Первое слово обычно россия правильное но война опасное слово сво его не надо писать";
+        
+        var sentence = new TextParser(rawText, ['.'], [' ']).Parse()[0];
+    
+        var rule = new Rule(new Word("война"), 0.6, 0, 
+            10000, 0.6,
+            0.7, new Word("СВО"), new Word("россия"));
+
+        var nextWordFound = new Word("");
+        var previousWordFound = new Word("");
+        
+        var rulesSentencesChecker = new RulesSentencesChecker();
+        var result = rulesSentencesChecker.RuleConditionsMatch(4, sentence, rule, null, out nextWordFound, out previousWordFound);
+        
+        Assert.That(result);
+        Assert.That(nextWordFound, Is.Not.Null);
+        Assert.That(previousWordFound, Is.Not.Null);
+    }
+    
+    [Test]
+    public void RuleMatchWordInSentenceWithExclude()
+    {
+        var rawText = "Первое слово клавиатурка клавиатуры обычно правильное но война опасное слово сво его не надо писать";
+        
+        var sentence = new TextParser(rawText, ['.'], [' ']).Parse()[0];
+    
+        var rule = new Rule(new Word("война"), 0.6, 0, 
+            10000, 0.6, 0.7, new Word("СВО"), new Word("клавиатура"));
+    
+        var nextWordFound = new Word("");
+        var previousWordFound = new Word("");
+
+        var excludes = new HashSet<Word>
+        {
+            sentence[3]
+        };
+        
+        var rulesSentencesChecker = new RulesSentencesChecker();
+        var result = rulesSentencesChecker.RuleConditionsMatch(4, sentence, rule,excludes ,
+            out nextWordFound, out previousWordFound);
+        
+        Assert.That(result);
+        Assert.That(nextWordFound, Is.Not.Null);
+        Assert.That(nextWordFound.Value, Is.EqualTo("сво"));
+        Assert.That(previousWordFound, Is.Not.Null);
+        Assert.That(previousWordFound.Value, Is.EqualTo("клавиатурка"));
     }
 }
