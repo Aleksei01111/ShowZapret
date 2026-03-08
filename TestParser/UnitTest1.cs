@@ -283,4 +283,27 @@ public class Tests
         Assert.That(previousWordFound, Is.Not.Null);
         Assert.That(previousWordFound.Value, Is.EqualTo("клавиатурка"));
     }
+
+    [Test]
+    public void ViolatingRules()
+    {
+        var warRule = new Rule(new Word("война"), 0.4,
+            0, 10000);
+        var aueRule = new Rule(new Word("ауе"), 1,
+            2, 10000);
+
+        var rules = new List<Rule>
+        {
+            warRule,
+            aueRule
+        };
+
+        var rulesSentencesChecker = new RulesSentencesChecker();
+        var violatingRules = rulesSentencesChecker.IsViolatesAnyRules(
+            new Word("войнушка"), rules);
+        
+        Assert.That(violatingRules, Is.Not.Null);
+        Assert.That(violatingRules.Count, Is.EqualTo(1));
+        Assert.That(violatingRules[0].TriggerWord.Value, Is.EqualTo("война"));
+    }
 }

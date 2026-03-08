@@ -2,35 +2,6 @@
 
 namespace Zapret;
 
-public class Rule
-{
-    public Word TriggerWord { get; set; }
-    public double TriggerWordMatchThreshold { get; set; }
-    public double FreedomPunishmentInMonth { get; set; }
-    public double MoneyPunishmentInRubles { get; set; }
-    
-    //Условие чтобы слово не триггерилось
-    public Word? RightWordNext { get; set; }
-    public double ThresholdForRightWordNext { get; set; }
-    //Условие чтобы слово не триггерилось
-    public Word? RightWordPrevious { get; set; }
-    public double ThresholdForRightWordPrevious { get; set; }
-
-    public Rule(Word triggerWord, double triggerWordMatchThreshold, double freedomPunishmentInMonth,
-        double moneyPunishmentInRubles, double thresholdForRightWordNext = 0, double thresholdForRightWordPrevious = 0,
-        Word? rightWordNext = null, Word? rightWordPrevious = null)
-    {
-        TriggerWord = triggerWord;
-        TriggerWordMatchThreshold = triggerWordMatchThreshold;
-        FreedomPunishmentInMonth = freedomPunishmentInMonth;
-        MoneyPunishmentInRubles = moneyPunishmentInRubles;
-        RightWordNext = rightWordNext;
-        RightWordPrevious = rightWordPrevious;
-        ThresholdForRightWordNext = thresholdForRightWordNext;
-        ThresholdForRightWordPrevious = thresholdForRightWordPrevious;
-    }
-}
-
 public class RulesSentencesChecker
 {
     private WordsProcess _wordsProcess = new WordsProcess();
@@ -62,5 +33,25 @@ public class RulesSentencesChecker
         }
 
         return passedConditionsCount != 0;
+    }
+
+    public List<Rule>? IsViolatesAnyRules(Word word, List<Rule> rules)
+    {
+        var res = new List<Rule>();
+        foreach (var rule in rules)
+        {
+            if(IsViolatesForRule(word, rule))
+                res.Add(rule);
+        }
+        if (res.Count == 0)
+            return null;
+        return res;
+    }
+
+    private bool IsViolatesForRule(Word word, Rule rule)
+    {
+        if (_wordsProcess.CompareByTrigram(word, rule.TriggerWord, rule.TriggerWordMatchThreshold))
+            return true;
+        return false;
     }
 }
