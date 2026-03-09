@@ -35,6 +35,51 @@ public class RulesSentencesChecker
         return passedConditionsCount != 0;
     }
 
+    public Dictionary<Word, List<Rule>> GetViolateRulesWordsInSentence(
+        Sentence sentence, List<Rule> rules)
+    {
+        var result = new Dictionary<Word, List<Rule>>();
+
+        var excludeWords = new HashSet<Word>();
+        
+        for (var i = 0; i < sentence.Count; i++)
+        {
+            var violatingRules = IsViolatesAnyRules(sentence[i], rules);
+            if (violatingRules != null)
+            {
+                excludeWords.Add(sentence[i]);
+                
+                var nextWord = new Word();
+                var previousWord = new Word();
+                
+                foreach (var rule in violatingRules)
+                {
+                    if (!RuleConditionsMatch(i, sentence, rule, excludeWords, 
+                            out nextWord, out previousWord))
+                    {
+                        if (result.TryGetValue(sentence[i], out var violatingRulesForCurrentWord))
+                        {
+                            // if (sentence[i] == null)
+                            //     sentence[i] = new List<Rule>();
+                            result[sentence[i]].Add(rule);
+                        }
+                        else
+                        {
+                            result.Add(sentence[i], [rule]);
+                        }
+                    }
+                    
+                    if(nextWord != null)
+                        excludeWords.Add(nextWord);
+                    if(previousWord != null)
+                        excludeWords.Add(previousWord);
+                }
+            }
+        }
+        
+        return result;
+    }
+    
     public List<Rule>? IsViolatesAnyRules(Word word, List<Rule> rules)
     {
         var res = new List<Rule>();
