@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{6FBF009D-E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp", "WpfApp\WpfApp.csproj", "{6FA1DD73-D6DA-4B74-BD40-97CC8C9985B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DB", "DB\DB.csproj", "{2DCB04A7-F8C6-49EC-922F-21A493666189}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{6FA1DD73-D6DA-4B74-BD40-97CC8C9985B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FA1DD73-D6DA-4B74-BD40-97CC8C9985B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FA1DD73-D6DA-4B74-BD40-97CC8C9985B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DCB04A7-F8C6-49EC-922F-21A493666189}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DCB04A7-F8C6-49EC-922F-21A493666189}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DCB04A7-F8C6-49EC-922F-21A493666189}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DCB04A7-F8C6-49EC-922F-21A493666189}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A47DFDB7-3A65-4DF5-8FD6-9DF304C3550B} = {6FBF009D-EC98-44F5-AB79-313E468007C1}

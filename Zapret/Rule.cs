@@ -4,6 +4,7 @@ namespace Zapret;
 
 public class Rule
 {
+    public string Name { get; set; }
     public Word TriggerWord { get; set; }
     public double TriggerWordMatchThreshold { get; set; }
     public double FreedomPunishmentInMonth { get; set; }
@@ -16,10 +17,11 @@ public class Rule
     public Word? RightWordPrevious { get; set; }
     public double ThresholdForRightWordPrevious { get; set; }
 
-    public Rule(Word triggerWord, double triggerWordMatchThreshold, double freedomPunishmentInMonth,
+    public Rule(string name, Word triggerWord, double triggerWordMatchThreshold, double freedomPunishmentInMonth,
         double moneyPunishmentInRubles, double thresholdForRightWordNext = 0, double thresholdForRightWordPrevious = 0,
         Word? rightWordNext = null, Word? rightWordPrevious = null)
     {
+        Name = name;
         TriggerWord = triggerWord;
         TriggerWordMatchThreshold = triggerWordMatchThreshold;
         FreedomPunishmentInMonth = freedomPunishmentInMonth;
