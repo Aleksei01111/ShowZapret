@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DB.Context;
 
-public partial class ShowZapretDbContext : DbContext
+internal partial class ShowZapretDbContext : DbContext
 {
     public ShowZapretDbContext()
     {
