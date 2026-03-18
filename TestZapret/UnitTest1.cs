@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices.ComTypes;
 using TextProcess;
 using Zapret;
+using Zapret.Entity;
 
 namespace TestZapret;
 

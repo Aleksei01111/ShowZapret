@@ -9,7 +9,7 @@ public class Tests
     private RulesService _rulesService = new RulesService();
     private NotesService _notesService = new NotesService();
     
-    private bool _needToStart = false;
+    private bool _needToStart = true;
     
     [SetUp]
     public void Setup()
@@ -49,11 +49,13 @@ public class Tests
         {
             Text = "test",
             User = user,
+            Date = DateTime.Now,
         };
         
         _notesService.SaveNote(note);
         
         Assert.That(_notesService.GetNotes().Last().Text, Is.EqualTo(note.Text));
+        Assert.That(_notesService.GetNotes().Last().Date, Is.EqualTo(note.Date));
     }
 
     [Test, Order(3)]

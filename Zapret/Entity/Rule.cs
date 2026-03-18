@@ -1,6 +1,6 @@
 ﻿using TextProcess;
 
-namespace Zapret;
+namespace Zapret.Entity;
 
 public class Rule
 {

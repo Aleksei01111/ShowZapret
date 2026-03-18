@@ -1,4 +1,5 @@
 ﻿using TextProcess;
+using Zapret.Entity;
 
 namespace Zapret;
 
