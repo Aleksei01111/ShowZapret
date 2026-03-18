@@ -1,16 +1,12 @@
 ﻿using DB.Context;
 using DB.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DB.Service;
 
-internal static class ShowZapretDbContextInstance
-{
-    public static ShowZapretDbContext Instance { get; } = new ShowZapretDbContext();
-}
-
 public class UsersService
 {
-    private ShowZapretDbContext _context = ShowZapretDbContextInstance.Instance;
+    private ShowZapretDbContext _context = new();
     
     public void RegisterNewUser(User user)
     {
@@ -25,7 +21,33 @@ public class UsersService
 
     public void ClearUsers()
     {
-        _context.Users.RemoveRange(_context.Users.ToList());
+        foreach (var user in _context.Users.Include(u => u.Rules).Include(u => u.Notes))
+        {
+            DeleteUser(user, true);
+        }
+    }
+    
+    internal void DeleteUser(User user, bool cascade = false)
+    {
+        var userRules = user.Rules.ToList();
+        var userNotes = user.Notes.ToList();
+        
+        if((userRules.Count > 0 && !cascade) || (userNotes.Count > 0 && !cascade))
+            throw new ArgumentException("user include rules or notes by delete dont cascade!");
+        
+        if (userRules.Count > 0 && cascade)
+        {
+            foreach (var rule in userRules)
+                _context.Rules.Remove(rule);
+        }
+    
+        if (userNotes.Count > 0)
+        {
+            foreach (var note in userNotes)
+                _context.Notes.Remove(note);
+        }
+        
+        _context.Users.Remove(user);
         _context.SaveChanges();
     }
 }
