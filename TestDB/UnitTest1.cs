@@ -63,7 +63,7 @@ public class Tests
     {
         var user = GetUserOrCreateAndAddToDB("testRule", "testRule");
 
-        var rule = new Rule()
+        var rule = new Rule
         {
             FreedomPunishInMonth = 100,
             MoneyPunishmentInRubles = 120,
@@ -100,7 +100,7 @@ public class Tests
             return users[0];
         }
         
-        var user = new User()
+        var user = new User
         {
             Login = loginIfNeedToCreateNew,
             Password = passwordIfNeedToCreateNew,

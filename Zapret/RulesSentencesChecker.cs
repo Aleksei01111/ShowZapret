@@ -1,5 +1,5 @@
-﻿using TextProcess;
-using Zapret.Entity;
+﻿using DB.Entities;
+using TextProcess;
 
 namespace Zapret;
 
@@ -18,16 +18,16 @@ public class RulesSentencesChecker
         var passedConditionsCount = 0;
         if (rule.RightWordNext != null)
         {
-            nextWord = _sentencesProcess.FindWordInSentence(sentence, rule.RightWordNext.Value, indexOfWordStartFromSentence,
-                rule.ThresholdForRightWordNext, true, _wordsProcess, wordsExclude);
+            nextWord = _sentencesProcess.FindWordInSentence(sentence, rule.RightWordNext, indexOfWordStartFromSentence,
+                (double)rule.ThresholdForRightWordNext, true, _wordsProcess, wordsExclude);
             if(nextWord != null)
                 passedConditionsCount++;
         }
 
         if (rule.RightWordPrevious != null)
         {
-            previousWord = _sentencesProcess.FindWordInSentence(sentence, rule.RightWordPrevious.Value, indexOfWordStartFromSentence,
-                rule.ThresholdForRightWordPrevious, false, _wordsProcess, wordsExclude);
+            previousWord = _sentencesProcess.FindWordInSentence(sentence, rule.RightWordPrevious, indexOfWordStartFromSentence,
+                (double)rule.ThresholdForRightWordPrevious, false, _wordsProcess, wordsExclude);
             
             if(previousWord != null)
                 passedConditionsCount++;
@@ -96,7 +96,7 @@ public class RulesSentencesChecker
 
     private bool IsViolatesForRule(Word word, Rule rule)
     {
-        if (_wordsProcess.CompareByTrigram(word, rule.TriggerWord, rule.TriggerWordMatchThreshold))
+        if (_wordsProcess.CompareByTrigram(word, new Word(rule.TriggerWord), rule.TriggerWordMatchThreshold))
             return true;
         return false;
     }

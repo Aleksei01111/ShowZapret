@@ -1,17 +1,12 @@
 ﻿using System.Runtime.InteropServices.ComTypes;
+using DB.Entities;
 using TextProcess;
 using Zapret;
-using Zapret.Entity;
 
 namespace TestZapret;
 
 public class Tests
 {
-    [SetUp]
-    public void Setup()
-    {
-    }
-
     [Test]
     public void RuleMatchWordInSentenceWithoutMatches()
     {
@@ -19,8 +14,8 @@ public class Tests
         
         var sentence = new TextParser(rawText, ['.'], [' ']).Parse()[0];
     
-        var rule = new Rule("Правило дескредитации сво", new Word("война"), 0.6, 0, 
-            10000, 0.6, 0, new Word("СВО"));
+        var rule = new Rule("Правило дескредитации сво", "война", 0.6, 0, 
+            10000, 0.6, 0, "СВО");
 
         var nextWordFound = new Word("");
         var previousWordFound = new Word("");
@@ -40,9 +35,9 @@ public class Tests
         
         var sentence = new TextParser(rawText, ['.'], [' ']).Parse()[0];
     
-        var rule = new Rule("Правило дескридитации СВО", new Word("война"), 0.6, 0, 
+        var rule = new Rule("Правило дескридитации СВО", "война", 0.6, 0, 
             10000, 0.6,
-            0.7, new Word("СВО"), new Word("россия"));
+            0.7, "СВО", "россия");
 
         var nextWordFound = new Word("");
         var previousWordFound = new Word("");
@@ -62,8 +57,8 @@ public class Tests
         
         var sentence = new TextParser(rawText, ['.'], [' ']).Parse()[0];
     
-        var rule = new Rule("Правило дескридитации СВО", new Word("война"), 0.6, 0, 
-            10000, 0.6, 0.7, new Word("СВО"), new Word("клавиатура"));
+        var rule = new Rule("Правило дескридитации СВО", "война", 0.6, 0, 
+            10000, 0.6, 0.7, "СВО", "клавиатура");
     
         var nextWordFound = new Word("");
         var previousWordFound = new Word("");
@@ -87,9 +82,9 @@ public class Tests
     [Test]
     public void ViolatingRules()
     {
-        var warRule = new Rule("Правило дескридитации СВО", new Word("война"), 0.4,
+        var warRule = new Rule("Правило дескридитации СВО", "война", 0.4,
             0, 10000);
-        var aueRule = new Rule("Правило экстремизма", new Word("ауе"), 1,
+        var aueRule = new Rule("Правило экстремизма", "ауе", 1,
             2, 10000);
 
         var rules = new List<Rule>
@@ -104,7 +99,7 @@ public class Tests
         
         Assert.That(violatingRules, Is.Not.Null);
         Assert.That(violatingRules.Count, Is.EqualTo(1));
-        Assert.That(violatingRules[0].TriggerWord.Value, Is.EqualTo("война"));
+        Assert.That(violatingRules[0].TriggerWord, Is.EqualTo("война"));
     }
 
     [Test]
@@ -116,8 +111,8 @@ public class Tests
 
         var text = parser.Parse();
         
-        var rule = new Rule("Правило дескридитации СВО", new Word("война"), 0.6, 0,
-            10000, 1, 1, new Word("сво"));
+        var rule = new Rule("Правило дескридитации СВО", "война", 0.6, 0,
+            10000, 1, 1, "сво");
         
         var rulesChecker = new RulesSentencesChecker();
         var res = rulesChecker.GetViolateRulesWordsInSentence(text[0], [rule]);
@@ -132,8 +127,8 @@ public class Tests
         var parser = new TextParser(rawText, ['.'], [' ']);
         var text = parser.Parse();
         
-        var rule = new Rule("Правило дескридитации СВО", new Word("война"), 0.6, 0,
-            10000, 1, 1, new Word("сво"));
+        var rule = new Rule("Правило дескридитации СВО", "война", 0.6, 0,
+            10000, 1, 1, "сво");
         
         var rulesChecker = new RulesSentencesChecker();
         var res = rulesChecker.GetViolateRulesWordsInSentence(text[0], [rule]);
@@ -149,9 +144,9 @@ public class Tests
         var parser = new TextParser(rawText, ['.'], [' ']);
         var text = parser.Parse();
         
-        var rule = new Rule("Правило дескридитации СВО", new Word("война"), 0.6, 0,
-            10000, 1, 1, new Word("сво"));
-        var rule2 = new Rule("Правило экстремизма", new Word("ауе"), 0.6, 0,
+        var rule = new Rule("Правило дескридитации СВО", "война", 0.6, 0,
+            10000, 1, 1, "сво");
+        var rule2 = new Rule("Правило экстремизма", "ауе", 0.6, 0,
             10000);
         
         var rulesChecker = new RulesSentencesChecker();
