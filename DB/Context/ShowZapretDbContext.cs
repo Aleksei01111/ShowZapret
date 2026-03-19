@@ -24,11 +24,11 @@ internal partial class ShowZapretDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        // optionsBuilder.UseSqlServer(
-        //     "Server=192.168.88.44;Database=ShowZapret;User Id=isp-223;Password=isp-223;TrustServerCertificate=True;MultipleActiveResultSets=True;");
-        
         optionsBuilder.UseSqlServer(
-            "Server=localhost;Database=ShowZapret;User Id=1234;Password=1234;TrustServerCertificate=True;MultipleActiveResultSets=True;");
+            "Server=192.168.88.44;Database=ShowZapret;User Id=isp-223;Password=isp-223;TrustServerCertificate=True;MultipleActiveResultSets=True;");
+        
+        // optionsBuilder.UseSqlServer(
+        //     "Server=localhost;Database=ShowZapret;User Id=1234;Password=1234;TrustServerCertificate=True;MultipleActiveResultSets=True;");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -52,6 +52,12 @@ internal partial class ShowZapretDbContext : DbContext
         {
             entity.ToTable("User");
             
+            entity.Property(u => u.Role)
+                .HasConversion<int>()
+                .HasColumnName("Role")
+                .HasColumnType("int")
+                .IsRequired();
+            
             entity.HasMany(e => e.Notes)
                 .WithOne(e => e.User)
                 .HasForeignKey(e => e.UserId)
@@ -63,6 +69,10 @@ internal partial class ShowZapretDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
+        modelBuilder.Entity<User>()
+            .HasIndex(u => u.Login)
+            .IsUnique();
+        
         OnModelCreatingPartial(modelBuilder);
     }
 

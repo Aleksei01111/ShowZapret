@@ -17,7 +17,10 @@ public class UsersService
     public User? GetUserByUserData(User userData) => 
         _context.Users.FirstOrDefault(u => u.Login == userData.Login && u.Password == userData.Password);
     
-    public List<User> GetUsers() => _context.Users.ToList();
+    public List<User> GetUsers() => _context.Users
+        .Include(u => u.Notes)
+        .Include(u => u.Rules)
+        .ToList();
 
     public void ClearUsers()
     {

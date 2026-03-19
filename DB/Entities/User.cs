@@ -5,6 +5,14 @@ namespace DB.Entities;
 
 public partial class User
 {
+    public enum UserRole
+    {
+        Guest,
+        Client,
+        Mizulina,
+        RKNEmployee
+    }
+    
     public int Id { get; set; }
 
     public string Login { get; set; } = null!;
@@ -13,7 +21,7 @@ public partial class User
 
     public string Address { get; set; } = null!;
 
-    public string Role { get; set; } = null!;
+    public UserRole Role { get; set; }
 
     public virtual ICollection<Note> Notes { get; set; } = new List<Note>();
 
