@@ -9,15 +9,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfApp;
+namespace WpfApp.Window;
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow : System.Windows.Window
 {
     public MainWindow()
     {
+        new LoginWindow().ShowDialog();
+        
         InitializeComponent();
     }
 }

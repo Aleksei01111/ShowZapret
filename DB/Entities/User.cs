@@ -7,6 +7,7 @@ public partial class User
 {
     public enum UserRole
     {
+        Admin,
         Guest,
         Client,
         Mizulina,
