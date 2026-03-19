@@ -7,13 +7,16 @@ public partial class MainWindow : System.Windows.Window
 {
     public MainWindow()
     {
-        var loginDialogResult = new LoginWindow(new User()).ShowDialog();
+        var authorizationWindow = new AuthorizationWindow(new User());
+        
+        var authorizationDialogResult = new AuthorizationWindow(new User()).ShowDialog();
 
-        if (loginDialogResult != true)
+        if (authorizationDialogResult != true)
         {
-            MessageBox.Show("Вы не вошли");
             Close();
         }
+
+        authorizationWindow.Close();
         
         InitializeComponent();
     }

@@ -13,8 +13,13 @@
         </Grid.ColumnDefinitions>
         
         <TextBlock Grid.Column="0" Style="{StaticResource PlaceholderText}"
-                   Text="{Binding Placeholder, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBox Grid.Column="1" Style="{StaticResource Text}"
-                 Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"/>
+                   Text="{Binding Placeholder, RelativeSource={RelativeSource AncestorType={x:Type local:TextBoxWithPlaceholder}}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <!-- <TextBox Grid.Column="1" Style="{StaticResource Text}" -->
+        <!--          Text="{Binding Text, -->
+        <!--           RelativeSource={RelativeSource AncestorType={x:Type local:TextBoxWithPlaceholder}}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/> -->
+                 <!-- Text="{Binding Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/> -->
+        <TextBox Grid.Column="1" Style="{StaticResource Text}" Text="{Binding Text, 
+                 RelativeSource={RelativeSource AncestorType={x:Type local:TextBoxWithPlaceholder}}, 
+                 UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 </UserControl>

@@ -9,32 +9,37 @@ public partial class TextBoxWithPlaceholder : System.Windows.Controls.UserContro
 {
     private string _placeholder;
     private string _text;
+
+    public static readonly DependencyProperty PlaceholderProperty =
+        DependencyProperty.Register(
+            nameof(Placeholder),
+            typeof(string),
+            typeof(TextBoxWithPlaceholder));
+    
+    public static readonly DependencyProperty TextProperty =
+        DependencyProperty.Register(
+            nameof(Text),
+            typeof(string),
+            typeof(TextBoxWithPlaceholder),
+            new FrameworkPropertyMetadata(
+                string.Empty, 
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
     
     public string Placeholder
     {
-        get => _placeholder;
-        set
-        {
-            _placeholder = value;
-            OnPropertyChanged();
-        }
+        get => (string)GetValue(PlaceholderProperty);
+        set => SetValue(PlaceholderProperty, value);
     }
 
     public string Text
     {
-        get => _text;
-        set
-        {
-            _text = value;
-            OnPropertyChanged();
-        }
+        get => (string)GetValue(TextProperty);
+        set => SetValue(TextProperty, value);
     }
     
     public TextBoxWithPlaceholder()
     {
         InitializeComponent();
-
-        DataContext = this;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

@@ -12,4 +12,8 @@
     <Style x:Key="Button1" TargetType="Button">
         
     </Style>
+    
+    <Style x:Key="Head1" TargetType="TextBlock">
+        
+    </Style>
 </ResourceDictionary>

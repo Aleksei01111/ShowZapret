@@ -10,12 +10,14 @@ public class UsersService
     
     public void RegisterNewUser(User user)
     {
+        if(_context.Users.Any(u => u.Login == user.Login))
+            throw new ArgumentException("Пользователь с таким логином уже ест!");
         _context.Users.Add(user);
         _context.SaveChanges();
     }
 
-    public User? GetUserByUserData(User userData) => 
-        _context.Users.FirstOrDefault(u => u.Login == userData.Login && u.Password == userData.Password);
+    public User? GetUserByLoginAndPassword(string login, string password) => 
+        _context.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
     
     public List<User> GetUsers() => _context.Users
         .Include(u => u.Notes)
