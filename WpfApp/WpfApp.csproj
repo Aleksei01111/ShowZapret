@@ -16,4 +16,9 @@
       </Page>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\DB\DB.csproj" />
+      <ProjectReference Include="..\Zapret\Zapret.csproj" />
+    </ItemGroup>
+
 </Project>

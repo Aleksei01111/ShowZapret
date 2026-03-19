@@ -1,24 +1,19 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using DB.Entities;
 
 namespace WpfApp.Window;
 
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
 public partial class MainWindow : System.Windows.Window
 {
     public MainWindow()
     {
-        new LoginWindow().ShowDialog();
+        var loginDialogResult = new LoginWindow(new User()).ShowDialog();
+
+        if (loginDialogResult != true)
+        {
+            MessageBox.Show("Вы не вошли");
+            Close();
+        }
         
         InitializeComponent();
     }
