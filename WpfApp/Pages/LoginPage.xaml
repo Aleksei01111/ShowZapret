@@ -15,6 +15,6 @@
         <uControls:TextBoxWithPlaceholder Placeholder="Пароль"
                                           Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-        <Button Content="Войти" Style="{StaticResource Button2}" Click="Login_OnClick" Margin="0 20 0 0"/>
+        <Button Content="Войти" Style="{StaticResource Button1}" Click="Login_OnClick" Margin="0 20 0 0"/>
     </StackPanel>
 </Page>
