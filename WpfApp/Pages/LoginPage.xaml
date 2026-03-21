@@ -8,13 +8,13 @@
       mc:Ignorable="d"
       Title="LoginPage">
     <StackPanel>
-        <TextBlock Text="Вход" />
+        <TextBlock Text="Вход" Style="{StaticResource Head1}" HorizontalAlignment="Center"/>
 
         <uControls:TextBoxWithPlaceholder Placeholder="Логин"
                                           Text="{Binding Login, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <uControls:TextBoxWithPlaceholder Placeholder="Пароль"
                                           Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-        <Button Content="Войти" Style="{StaticResource Button1}" Click="Login_OnClick" />
+        <Button Content="Войти" Style="{StaticResource Button2}" Click="Login_OnClick" Margin="0 20 0 0"/>
     </StackPanel>
 </Page>

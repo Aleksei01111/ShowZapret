@@ -7,10 +7,10 @@
         xmlns:uControls="clr-namespace:WpfApp.UserControl"
         mc:Ignorable="d"
         Title="LoginWindow" Height="500" Width="400">
-    <Grid>
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="0.4*"/>
         </Grid.RowDefinitions>
 
         <Frame x:Name="MainFrame"

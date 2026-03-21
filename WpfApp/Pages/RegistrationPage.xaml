@@ -8,7 +8,7 @@
       mc:Ignorable="d"
       Title="RegistrationPage">
     <StackPanel>
-        <TextBlock Text="Регистрация" Style="{StaticResource Head1}" />
+        <TextBlock Text="Регистрация" Style="{StaticResource Head1}" HorizontalAlignment="Center"/>
 
         <uControls:TextBoxWithPlaceholder Placeholder="Логин"
                                           Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}" />
@@ -19,6 +19,6 @@
         <uControls:TextBoxWithPlaceholder Placeholder="Адрес"
                                           Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" />
 
-        <Button Content="Зарегистрироваться" Style="{StaticResource Button1}" Click="RegisterDone_OnClick" />
+        <Button Content="Зарегистрироваться" Style="{StaticResource Button2}" Click="RegisterDone_OnClick" Margin="0 20 0 0"/>
     </StackPanel>
 </Page>
