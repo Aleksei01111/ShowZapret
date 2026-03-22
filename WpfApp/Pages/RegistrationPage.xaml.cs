@@ -90,15 +90,15 @@ public partial class RegistrationPage : Page, INotifyPropertyChanged
 
     private bool CheckCorrect()
     {
-        if (Password != PasswordRepeat)
-        {
-            MessageBox.Show("Пароли не совпадают!!!!");
-            return false;
-        }
-
         if (Login == null || Password == null || PasswordRepeat == null || Address == null)
         {
             MessageBox.Show("Заполнены не все поля");
+            return false;
+        }
+        
+        if (Password != PasswordRepeat)
+        {
+            MessageBox.Show("Пароли не совпадают!!!!");
             return false;
         }
 

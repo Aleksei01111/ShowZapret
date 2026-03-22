@@ -12,10 +12,10 @@
 
         <uControls:TextBoxWithPlaceholder Placeholder="Логин"
                                           Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}" />
-        <uControls:TextBoxWithPlaceholder Placeholder="Пароль"
-                                          Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
-        <uControls:TextBoxWithPlaceholder Placeholder="Повтор пароля"
-                                          Text="{Binding PasswordRepeat, UpdateSourceTrigger=PropertyChanged}" />
+        <uControls:PasswordBoxWithPlaceholder Placeholder="Пароль"
+                                          Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+        <uControls:PasswordBoxWithPlaceholder Placeholder="Повтор пароля"
+                                              Password="{Binding PasswordRepeat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
         <uControls:TextBoxWithPlaceholder Placeholder="Адрес"
                                           Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" />
 

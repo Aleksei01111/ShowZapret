@@ -5,7 +5,7 @@ using System.Windows.Controls;
 
 namespace WpfApp.UserControl;
 
-public partial class TextBoxWithPlaceholder : System.Windows.Controls.UserControl, INotifyPropertyChanged
+public partial class TextBoxWithPlaceholder : System.Windows.Controls.UserControl
 {
     private string _placeholder;
     private string _text;
@@ -40,11 +40,5 @@ public partial class TextBoxWithPlaceholder : System.Windows.Controls.UserContro
     public TextBoxWithPlaceholder()
     {
         InitializeComponent();
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

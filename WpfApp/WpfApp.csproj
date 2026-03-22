@@ -21,4 +21,11 @@
       <ProjectReference Include="..\Zapret\Zapret.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Resources\Images\eye.png" />
+      <Resource Include="Resources\Images\eye.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
+    </ItemGroup>
+
 </Project>
