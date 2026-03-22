@@ -44,8 +44,31 @@ public class UsersService
         _context.SaveChanges();
     }
 
-    public User? GetUserByLoginAndPassword(string login, string password) => 
-        _context.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
+    public User? GetUserByLoginAndPassword(string login, string password, bool isGuest = false)
+    {
+        if (isGuest)
+        {
+            var found = _context.Users.FirstOrDefault(u => u.Role == User.UserRole.Guest);
+            if (found == null)
+            {
+                var newUserGuest = new User
+                {
+                    Login = "Guest",
+                    Password = "",
+                    Address = "",
+                    Role = User.UserRole.Guest
+                };
+
+                RegisterNewUser(newUserGuest);
+                
+                return newUserGuest;
+            }
+
+            return found;
+        }
+            
+        return _context.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
+    }
     
     public List<User> GetUsers() => _context.Users
         .Include(u => u.Notes)

@@ -54,4 +54,11 @@ public partial class AuthorizationWindow : System.Windows.Window
         _onAuthorizationDone(user);
         DialogResult = true;
     }
+
+    private void AuthorizationGuest_OnClick(object sender, RoutedEventArgs e)
+    {
+        var user = _usersService.GetUserByLoginAndPassword("", "", true);
+        _onAuthorizationDone(user);
+        DialogResult = true;
+    }
 }

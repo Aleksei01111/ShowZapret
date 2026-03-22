@@ -36,9 +36,11 @@ public partial class MainWindow : INotifyPropertyChanged
         InitializeComponent();
         DataContext = this;
         
-        Pages.Add(new MainPageViewModel(new AdminPage(), "Пользователи"));
+        if(_user.Role == User.UserRole.Admin)
+            Pages.Add(new MainPageViewModel(new AdminPage(), "Пользователи"));
         
-        SelectedPage = Pages[0];
+        if(Pages.Count > 0)
+            SelectedPage = Pages[0];
     }
 
     private void OnAuthorizationDone(User foundUser)
