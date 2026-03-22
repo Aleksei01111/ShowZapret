@@ -1,0 +1,36 @@
+﻿<Page x:Class="WpfApp.Pages.MainWindow.AdminPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:WpfApp.Pages.MainWindow"
+      xmlns:uControls="clr-namespace:WpfApp.UserControl"
+      mc:Ignorable="d"
+      Title="AdminPage" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.8*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <ListView ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}">
+            <ListView.ItemTemplate><DataTemplate>
+                <TextBlock Text="{Binding Login}" Style="{StaticResource PlaceholderText}"/>
+            </DataTemplate></ListView.ItemTemplate>
+        </ListView>
+        
+        <GridSplitter Grid.Column="1" Width="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        
+        <StackPanel Grid.Column="2">
+            <TextBlock Text="Параметры учетной записи" Style="{StaticResource Head2}"/>
+            
+            <uControls:TextBoxWithPlaceholder Placeholder="Логин" Text="{Binding NewLoginSelectedUser}"/>
+            <uControls:TextBoxWithPlaceholder Placeholder="Пароль" Text="{Binding NewPasswordSelectedUser}"/>
+            <uControls:TextBoxWithPlaceholder Placeholder="Адрес" Text="{Binding NewAddressSelectedUser}"/>
+            <uControls:TextBoxWithPlaceholder Placeholder="Роль" Text="{Binding NewRoleSelectedUser}"/>
+            
+            <Button Content="Сохранить" Style="{StaticResource Button1}" Margin="0 20 0 0" Click="SaveUser_OnClick"/>
+        </StackPanel>
+    </Grid>
+</Page>

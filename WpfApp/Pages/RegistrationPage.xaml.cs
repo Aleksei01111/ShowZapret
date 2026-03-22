@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using DB.Entities;
 
 namespace WpfApp.Pages;
 
@@ -82,6 +83,7 @@ public partial class RegistrationPage : Page, INotifyPropertyChanged
             Login = Login!,
             Password = Password!,
             Address = Address!,
+            Role = User.UserRole.Client
         };
 
         if (TryRegisterUser(user))

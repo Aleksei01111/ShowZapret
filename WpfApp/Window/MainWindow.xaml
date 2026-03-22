@@ -6,7 +6,25 @@
         xmlns:local="clr-namespace:WpfApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.05*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Text="{Binding User.Login, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PlaceholderText}" HorizontalAlignment="Right"/>
+        
+        <TabControl Grid.Row="1" ItemsSource="{Binding Pages}" SelectedItem="{Binding SelectedPage}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Header}" Style="{StaticResource PlaceholderText}"/>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <Frame Content="{Binding TabPage}" NavigationUIVisibility="Hidden"/>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
     </Grid>
 </Window>

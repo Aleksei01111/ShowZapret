@@ -16,6 +16,25 @@ public class UsersService
         _context.SaveChanges();
     }
 
+    public void SaveUser(User user, User newUserData)
+    {
+        if (_context.Users.Any(u => u.Login == user.Login && u.Id != user.Id))
+            throw new ArgumentException("Пользователь с таким логином уже есть");
+        
+        var foundUser = _context.Users.Where(u => u.Login == user.Login && u.Id == user.Id)?.FirstOrDefault();
+
+        if (foundUser == null)
+            throw new ArgumentException($"Пользователь {user.Login} не найден");
+        
+        foundUser.Login = newUserData.Login;
+        foundUser.Password = newUserData.Password;
+        foundUser.Address =  newUserData.Address;
+        foundUser.Role = newUserData.Role;
+        
+        _context.Users.Update(foundUser);
+        _context.SaveChanges();
+    }
+
     public User? GetUserByLoginAndPassword(string login, string password) => 
         _context.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
     

@@ -8,14 +8,16 @@ namespace WpfApp.Window;
 public partial class AuthorizationWindow : System.Windows.Window
 {
     private DB.Service.UsersService _usersService;
-    private DB.Entities.User _user;
+    private DB.Entities.User _user = new();
 
     private readonly Pages.LoginPage _loginPage;
     private readonly Pages.RegistrationPage _registrationPage;
 
-    public AuthorizationWindow(DB.Entities.User user)
+    private Action<User> _onAuthorizationDone;
+
+    public AuthorizationWindow(Action<User> onAuthorizationDone)
     {
-        _user = user;
+        _onAuthorizationDone = onAuthorizationDone;
         _usersService = new();
 
         InitializeComponent();
@@ -43,13 +45,13 @@ public partial class AuthorizationWindow : System.Windows.Window
 
     private void OnLoginDone(User foundUser)
     {
-        MessageBox.Show($"Вы вошли как: {foundUser.Login}");
+        _onAuthorizationDone(foundUser);
         DialogResult = true;
     }
 
     private void OnRegisterDone(User user)
     {
-        MessageBox.Show($"Вы зарегистрировались: {user.Login}");
+        _onAuthorizationDone(user);
         DialogResult = true;
     }
 }
