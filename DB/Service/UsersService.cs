@@ -16,6 +16,15 @@ public class UsersService
         _context.SaveChanges();
     }
 
+    public void DeleteUser(User user)
+    {
+        var foundUser = _context.Users.Where(u => u.Login == user.Login)?.FirstOrDefault();
+        if (foundUser == null)
+            throw new ArgumentException("Пользователь не найден");
+        _context.Users.Remove(foundUser);
+        _context.SaveChanges();
+    }
+    
     public void SaveUser(User user, User newUserData)
     {
         if (_context.Users.Any(u => u.Login == user.Login && u.Id != user.Id))

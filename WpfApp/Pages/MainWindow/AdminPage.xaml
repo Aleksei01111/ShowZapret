@@ -15,6 +15,11 @@
         </Grid.ColumnDefinitions>
         
         <ListView ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить" Click="DeleteUser_OnClick"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.ItemTemplate><DataTemplate>
                 <TextBlock Text="{Binding Login}" Style="{StaticResource PlaceholderText}"/>
             </DataTemplate></ListView.ItemTemplate>

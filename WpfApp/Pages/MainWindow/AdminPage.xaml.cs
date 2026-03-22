@@ -61,13 +61,16 @@ public partial class AdminPage : Page, INotifyPropertyChanged
 
     public ObservableCollection<User> Users { get; }
 
-    public User SelectedUser
+    public User? SelectedUser
     {
         get => _selectedUser;
         set
         {
             _selectedUser = value;
             OnPropertyChanged();
+
+            if (value == null)
+                return;
             
             NewLoginSelectedUser = _selectedUser.Login;
             NewPasswordSelectedUser = _selectedUser.Password;
@@ -81,7 +84,6 @@ public partial class AdminPage : Page, INotifyPropertyChanged
         DataContext = this;
 
         Users = new ObservableCollection<User>(_usersService.GetUsers());
-        SelectedUser = Users[0];
         
         InitializeComponent();
     }
@@ -109,6 +111,30 @@ public partial class AdminPage : Page, INotifyPropertyChanged
         {
             _usersService.SaveUser(SelectedUser, userData);
             MessageBox.Show("Сохранено");
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+    }
+
+    private void DeleteUser_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (Users.Count == 1)
+        {
+            MessageBox.Show("Учетных записей слишком мало для удаления");
+            return;
+        }
+        
+        if (MessageBox.Show("Вы уверены?", "Вы уверены", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+            return;
+
+        try
+        {
+            _usersService.DeleteUser(SelectedUser);
+            MessageBox.Show("Удалено");
+            Users.Remove(SelectedUser);
+            SelectedUser = null;
         }
         catch (Exception ex)
         {
