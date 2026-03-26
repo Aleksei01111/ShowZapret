@@ -17,40 +17,44 @@ public class TextParser
     {
         var result = new List<Sentence>();
         var currentSentenceWords = new List<Word>();
-
         var currentWord = "";
 
-        foreach(var c in _rawText)
+        for (var i = 0; i < _rawText.Length; i++)
         {
-            if(_wordsSeporators.Contains(c) && currentWord.Length > 0)
+            var c = _rawText[i];
+
+            if (_sentencesSeporators.Contains(c))
             {
-                currentSentenceWords.Add(new Word(currentWord));
-                currentWord = "";
-            }
-            else if(_sentencesSeporators.Contains(c))
-            {
-                if(currentWord.Length > 0)
+                if (currentWord.Length > 0)
                 {
                     currentSentenceWords.Add(new Word(currentWord));
                     currentWord = "";
                 }
-                
                 if (currentSentenceWords.Count > 0)
                 {
-                    result.Add(new Sentence(currentSentenceWords, true));
+                    result.Add(new Sentence(new List<Word>(currentSentenceWords), true));
                     currentSentenceWords.Clear();
                 }
             }
-            else if(char.IsLetter(c) || (char.IsDigit(c) && currentWord.Length > 0))
+            else if (_wordsSeporators.Contains(c))
             {
-                currentWord += c;
+                if (currentWord.Length > 0)
+                {
+                    currentSentenceWords.Add(new Word(currentWord));
+                    currentWord = "";
+                }
             }
-        }
+            else if (char.IsLetter(c) || char.IsDigit(c))
+                currentWord += c;
 
-        if(currentWord.Length > 0)
-        {
-            currentSentenceWords.Add(new Word(currentWord));
-            result.Add(new Sentence(currentSentenceWords, true));
+            if (i == _rawText.Length - 1)
+            {
+                if (currentWord.Length > 0)
+                    currentSentenceWords.Add(new Word(currentWord));
+                
+                if (currentSentenceWords.Count > 0)
+                    result.Add(new Sentence(new List<Word>(currentSentenceWords), true));
+            }
         }
 
         return result;

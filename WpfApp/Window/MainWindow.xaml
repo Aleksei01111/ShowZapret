@@ -22,7 +22,12 @@
             </TabControl.ItemTemplate>
             <TabControl.ContentTemplate>
                 <DataTemplate>
-                    <Frame Content="{Binding TabPage}" NavigationUIVisibility="Hidden"/>
+                    <Frame Content="{Binding TabPage}"
+                           NavigationUIVisibility="Hidden" 
+                           HorizontalContentAlignment="Stretch"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Stretch"
+                           VerticalContentAlignment="Stretch"/>
                 </DataTemplate>
             </TabControl.ContentTemplate>
         </TabControl>

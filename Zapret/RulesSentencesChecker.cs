@@ -8,7 +8,16 @@ public class RulesSentencesChecker
     private WordsProcess _wordsProcess = new WordsProcess();
     private SentencesProcess _sentencesProcess = new SentencesProcess();
     
-    //Выполняет ли условие правила
+    /// <summary>
+    /// Выполняет ли условие правила
+    /// </summary>
+    /// <param name="indexOfWordStartFromSentence"></param>
+    /// <param name="sentence"></param>
+    /// <param name="rule"></param>
+    /// <param name="wordsExclude"></param>
+    /// <param name="nextWord"></param>
+    /// <param name="previousWord"></param>
+    /// <returns></returns>
     public bool RuleConditionsMatch(int indexOfWordStartFromSentence, Sentence sentence, 
         Rule rule, HashSet<Word> wordsExclude, out Word? nextWord, out Word? previousWord)
     {
@@ -80,7 +89,29 @@ public class RulesSentencesChecker
         
         return result;
     }
+
+    public Dictionary<Sentence, Dictionary<Word, List<Rule>>> GetViolateRulesWordsInText(List<Sentence> text,
+        List<Rule> rules)
+    {
+        var result = new Dictionary<Sentence, Dictionary<Word, List<Rule>>>();
+        foreach (var sentence in text)
+        {
+            var violating = GetViolateRulesWordsInSentence(sentence, rules);
+            if (violating.Count > 0)
+            {
+                result.Add(sentence, violating);
+            }
+        }
+
+        return result;
+    }
     
+    /// <summary>
+    /// Нарушает правило без учета условий
+    /// </summary>
+    /// <param name="word"></param>
+    /// <param name="rules"></param>
+    /// <returns></returns>
     public List<Rule>? IsViolatesAnyRules(Word word, List<Rule> rules)
     {
         var res = new List<Rule>();
@@ -96,8 +127,6 @@ public class RulesSentencesChecker
 
     private bool IsViolatesForRule(Word word, Rule rule)
     {
-        if (_wordsProcess.CompareByTrigram(word, new Word(rule.TriggerWord), rule.TriggerWordMatchThreshold))
-            return true;
-        return false;
+        return _wordsProcess.CompareByTrigram(word, new Word(rule.TriggerWord), rule.TriggerWordMatchThreshold);
     }
 }

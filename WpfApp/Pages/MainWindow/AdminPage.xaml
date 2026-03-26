@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:WpfApp.Pages.MainWindow"
       xmlns:uControls="clr-namespace:WpfApp.UserControl"
       mc:Ignorable="d"
-      Title="AdminPage" Height="450" Width="800">
+      Title="AdminPage">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.8*"/>

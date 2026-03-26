@@ -1,0 +1,100 @@
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Globalization;
+using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Media;
+using DB.Entities;
+using TextProcess;
+using Zapret;
+using Color = System.Drawing.Color;
+
+namespace WpfApp.Pages.MainWindow;
+
+public partial class InspectPhrase : Page, INotifyPropertyChanged
+{
+    private char[] _sentencesSeparators = ['.', '!', '?'];
+    private char[] _wordsSeparators = [' ', ','];
+    
+    private string _inputText;
+
+    private List<Rule> _rules = new();
+    
+    public ObservableCollection<Sentence> Sentences { get; } = new();
+    public Dictionary<Sentence, List<WordAnalysisResult>> WordsAnalysis { get; private set; } = new();
+    
+    public string InputText
+    {
+        get => _inputText;
+        set
+        {
+            _inputText = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public InspectPhrase()
+    {
+        var rule = new Rule("Дескридитация СВО", "война", 0.4,
+            2, 100000, 0.4, 0, "сво");
+        _rules.Add(rule);
+        
+        InitializeComponent();
+        
+        DataContext = this;
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    private void InspectPhrase_OnClick(object sender, RoutedEventArgs e)
+    {
+        var sentences = new TextParser(InputText, _sentencesSeparators, _wordsSeparators).Parse();
+
+        var textAnalyze = new SentencesAnalyzer(_rules);
+        var wordsAnalyses = textAnalyze.AnalyzeText(sentences);
+        WordsAnalysis = wordsAnalyses;
+        
+        OnPropertyChanged(nameof(WordsAnalysis));
+    }
+}
+
+public class WordAnalysisVerdictToBrushConverter : IValueConverter
+{
+    private SolidColorBrush _cleanWordAnalysisColor = new SolidColorBrush(Colors.LightGreen);
+    private SolidColorBrush _exemptedWordAnalysisColor = new SolidColorBrush(Colors.LightYellow);
+    private SolidColorBrush _violationWordAnalysisColor = new SolidColorBrush(Colors.LightCoral);
+    
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        var convertedValue = ((WordAnalysisResult.VerdictType)value);
+        
+        if (convertedValue == WordAnalysisResult.VerdictType.Clean)
+            return _cleanWordAnalysisColor;
+        if(convertedValue == WordAnalysisResult.VerdictType.Exempted)
+            return _exemptedWordAnalysisColor;
+        if(convertedValue == WordAnalysisResult.VerdictType.Violation)
+            return _violationWordAnalysisColor;
+        
+        return null;
+    }
+
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        var convertedValue = ((SolidColorBrush)value).Color;
+        
+        if (convertedValue == _cleanWordAnalysisColor.Color)
+            return WordAnalysisResult.VerdictType.Clean;
+        if(convertedValue == _exemptedWordAnalysisColor.Color)
+            return WordAnalysisResult.VerdictType.Exempted;
+        if(convertedValue == _violationWordAnalysisColor.Color)
+            return WordAnalysisResult.VerdictType.Violation;
+        
+        return null;
+    }
+}

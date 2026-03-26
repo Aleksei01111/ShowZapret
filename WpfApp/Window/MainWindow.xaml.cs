@@ -39,6 +39,9 @@ public partial class MainWindow : INotifyPropertyChanged
         if(_user.Role == User.UserRole.Admin)
             Pages.Add(new MainPageViewModel(new AdminPage(), "Пользователи"));
         
+        if(_user.Role is User.UserRole.Client or User.UserRole.Guest)
+            Pages.Add(new MainPageViewModel(new InspectPhrase(), "Проверить текст"));
+        
         if(Pages.Count > 0)
             SelectedPage = Pages[0];
     }
