@@ -14,7 +14,8 @@ public class NotesService
         _context.SaveChanges();
     }
     
-    public List<Note> GetNotes() => _context.Notes.ToList();
+    public List<Note> GetNotesForUser(User user) => 
+        _context.Notes.Where(n => n.User.Login == user.Login).ToList();
     
     public void ClearAllNotes()
     {

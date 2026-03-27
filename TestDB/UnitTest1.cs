@@ -54,8 +54,8 @@ public class Tests
         
         _notesService.SaveNote(note);
         
-        Assert.That(_notesService.GetNotes().Last().Text, Is.EqualTo(note.Text));
-        Assert.That(_notesService.GetNotes().Last().Date, Is.EqualTo(note.Date));
+        Assert.That(_notesService.GetNotesForUser(user).Last().Text, Is.EqualTo(note.Text));
+        Assert.That(_notesService.GetNotesForUser(user).Last().Date, Is.EqualTo(note.Date));
     }
 
     [Test, Order(3)]

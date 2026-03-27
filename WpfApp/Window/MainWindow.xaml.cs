@@ -40,7 +40,10 @@ public partial class MainWindow : INotifyPropertyChanged
             Pages.Add(new MainPageViewModel(new AdminPage(), "Пользователи"));
         
         if(_user.Role is User.UserRole.Client or User.UserRole.Guest)
-            Pages.Add(new MainPageViewModel(new InspectPhrase(), "Проверить текст"));
+            Pages.Add(new MainPageViewModel(new InspectPhrase(_user), "Проверить текст"));
+
+        if (_user.Role is User.UserRole.Client)
+            Pages.Add(new MainPageViewModel(new NotesHistoryPage(_user), "История записей"));
         
         if(Pages.Count > 0)
             SelectedPage = Pages[0];

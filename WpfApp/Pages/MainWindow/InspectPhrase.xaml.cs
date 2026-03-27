@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using DB.Entities;
+using DB.Service;
 using TextProcess;
 using Zapret;
 using Color = System.Drawing.Color;
@@ -15,12 +16,14 @@ namespace WpfApp.Pages.MainWindow;
 
 public partial class InspectPhrase : Page, INotifyPropertyChanged
 {
+    private User _user;
+    
     private char[] _sentencesSeparators = ['.', '!', '?'];
     private char[] _wordsSeparators = [' ', ','];
     
     private string _inputText;
-    private double _finalFreedomPunishmentInMonth;
-    private double _finalMoneyPunishmentInRubles;
+    private double? _finalFreedomPunishmentInMonth;
+    private double? _finalMoneyPunishmentInRubles;
     
     private List<Rule> _rules = new();
     
@@ -37,7 +40,7 @@ public partial class InspectPhrase : Page, INotifyPropertyChanged
         }
     }
 
-    public double FinalFreedomPunishmentInMonth
+    public double? FinalFreedomPunishmentInMonth
     {
         get => _finalFreedomPunishmentInMonth;
         set
@@ -47,7 +50,7 @@ public partial class InspectPhrase : Page, INotifyPropertyChanged
         }
     }
 
-    public double FinalMoneyPunishmentInRubles
+    public double? FinalMoneyPunishmentInRubles
     {
         get => _finalMoneyPunishmentInRubles;
         set
@@ -57,11 +60,13 @@ public partial class InspectPhrase : Page, INotifyPropertyChanged
         }
     }
 
-    public InspectPhrase()
+    public InspectPhrase(User user)
     {
         var rule = new Rule("Дескридитация СВО", "война", 0.4,
             2, 100000, 0.4, 0, "сво");
         _rules.Add(rule);
+
+        _user = user;
         
         InitializeComponent();
         
@@ -83,12 +88,23 @@ public partial class InspectPhrase : Page, INotifyPropertyChanged
         var punishmentCalculatorResult = punishmentCalculator.GetPunishments();
         FinalFreedomPunishmentInMonth = punishmentCalculatorResult.finalFreedomPunishmentInMonth;
         FinalMoneyPunishmentInRubles = punishmentCalculatorResult.finalMoneyPunishmentInRubles;
+
+        SaveAsNote();
     }
 
+    private void SaveAsNote()
+    {
+        var note = new Note
+        {
+            Date = DateTime.Now,
+            Text = _inputText,
+            User = _user,
+        };
+        new NotesService().SaveNote(note);
+    }
+    
     private void SetWordsAnalysis(List<Sentence> sentences)
     {
-        
-
         var textAnalyze = new SentencesAnalyzer(_rules);
         var wordsAnalyses = textAnalyze.AnalyzeText(sentences);
         WordsAnalysis = wordsAnalyses;
