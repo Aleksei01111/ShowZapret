@@ -19,7 +19,9 @@ public partial class InspectPhrase : Page, INotifyPropertyChanged
     private char[] _wordsSeparators = [' ', ','];
     
     private string _inputText;
-
+    private double _finalFreedomPunishmentInMonth;
+    private double _finalMoneyPunishmentInRubles;
+    
     private List<Rule> _rules = new();
     
     public ObservableCollection<Sentence> Sentences { get; } = new();
@@ -31,6 +33,26 @@ public partial class InspectPhrase : Page, INotifyPropertyChanged
         set
         {
             _inputText = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public double FinalFreedomPunishmentInMonth
+    {
+        get => _finalFreedomPunishmentInMonth;
+        set
+        {
+            _finalFreedomPunishmentInMonth = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public double FinalMoneyPunishmentInRubles
+    {
+        get => _finalMoneyPunishmentInRubles;
+        set
+        {
+            _finalMoneyPunishmentInRubles = value;
             OnPropertyChanged();
         }
     }
@@ -55,6 +77,17 @@ public partial class InspectPhrase : Page, INotifyPropertyChanged
     private void InspectPhrase_OnClick(object sender, RoutedEventArgs e)
     {
         var sentences = new TextParser(InputText, _sentencesSeparators, _wordsSeparators).Parse();
+        SetWordsAnalysis(sentences);
+
+        var punishmentCalculator = new PunishmentCalculator(WordsAnalysis.Values.ToList());
+        var punishmentCalculatorResult = punishmentCalculator.GetPunishments();
+        FinalFreedomPunishmentInMonth = punishmentCalculatorResult.finalFreedomPunishmentInMonth;
+        FinalMoneyPunishmentInRubles = punishmentCalculatorResult.finalMoneyPunishmentInRubles;
+    }
+
+    private void SetWordsAnalysis(List<Sentence> sentences)
+    {
+        
 
         var textAnalyze = new SentencesAnalyzer(_rules);
         var wordsAnalyses = textAnalyze.AnalyzeText(sentences);
