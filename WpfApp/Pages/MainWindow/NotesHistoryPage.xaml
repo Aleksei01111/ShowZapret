@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:WpfApp.Pages.MainWindow"
       mc:Ignorable="d"
       d:DataContext="{d:DesignInstance local:NotesHistoryPage, IsDesignTimeCreatable=True}"
-      Title="NotesHistoryPage" Height="450" Width="800">
+      Title="NotesHistoryPage" d:Height="450" d:Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.1*"/>
@@ -18,13 +18,16 @@
                 HorizontalAlignment="Left"
                 Click="RefreshNotesHistory_OnClick"/>
         
-        <ListView Grid.Row="1" ItemsSource="{Binding Notes}" SelectedItem="{Binding SelectedNote}">
-            <ListView.ItemTemplate>
+        <ListBox Grid.Row="1" ItemsSource="{Binding Notes}"
+                  SelectedItem="{Binding SelectedNote}" VirtualizingPanel.ScrollUnit="Pixel" ScrollViewer.CanContentScroll="False">
+            <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Text}" MaxWidth="150" 
-                               Style="{StaticResource PlaceholderText}" TextTrimming="CharacterEllipsis"/>
+                    <Border BorderThickness="0 1 0 0" BorderBrush="Black">
+                        <TextBlock Text="{Binding Text}" MaxWidth="300" MaxHeight="25"
+                                   Style="{StaticResource PlaceholderText}" TextTrimming="CharacterEllipsis"/>
+                    </Border>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Page>

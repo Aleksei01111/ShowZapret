@@ -25,6 +25,9 @@ public partial class TextBoxWithPlaceholder : System.Windows.Controls.UserContro
                 string.Empty, 
                 FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
     
+    public static readonly DependencyProperty IsReadOnlyProperty = 
+        DependencyProperty.Register(nameof(IsReadOnly), typeof(bool),typeof(TextBoxWithPlaceholder));
+    
     public string Placeholder
     {
         get => (string)GetValue(PlaceholderProperty);
@@ -35,6 +38,12 @@ public partial class TextBoxWithPlaceholder : System.Windows.Controls.UserContro
     {
         get => (string)GetValue(TextProperty);
         set => SetValue(TextProperty, value);
+    }
+
+    public bool IsReadOnly
+    {
+        get => (bool)GetValue(IsReadOnlyProperty);
+        set => SetValue(IsReadOnlyProperty, value);
     }
     
     public TextBoxWithPlaceholder()

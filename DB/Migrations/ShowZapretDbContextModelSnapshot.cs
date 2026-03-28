@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DB.Entities
+namespace DB.Migrations
 {
     [DbContext(typeof(ShowZapretDbContext))]
     partial class ShowZapretDbContextModelSnapshot : ModelSnapshot
@@ -63,7 +63,7 @@ namespace DB.Entities
 
                     b.Property<string>("NameOfRule")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RightWordNext")
                         .HasColumnType("nvarchar(max)");
@@ -88,6 +88,9 @@ namespace DB.Entities
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("NameOfRule")
+                        .IsUnique();
 
                     b.HasIndex("UserCreatorId");
 

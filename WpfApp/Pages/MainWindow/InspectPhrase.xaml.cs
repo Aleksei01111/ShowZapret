@@ -16,6 +16,9 @@ namespace WpfApp.Pages.MainWindow;
 
 public partial class InspectPhrase : Page, INotifyPropertyChanged
 {
+    private NotesService _notesService = new();
+    private RulesService _rulesService = new();
+    
     private User _user;
     
     private char[] _sentencesSeparators = ['.', '!', '?'];
@@ -62,15 +65,13 @@ public partial class InspectPhrase : Page, INotifyPropertyChanged
 
     public InspectPhrase(User user)
     {
-        var rule = new Rule("Дескридитация СВО", "война", 0.4,
-            2, 100000, 0.4, 0, "сво");
-        _rules.Add(rule);
-
         _user = user;
         
         InitializeComponent();
         
         DataContext = this;
+
+        LoadRules();
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -100,7 +101,7 @@ public partial class InspectPhrase : Page, INotifyPropertyChanged
             Text = _inputText,
             User = _user,
         };
-        new NotesService().SaveNote(note);
+        _notesService.SaveNote(note);
     }
     
     private void SetWordsAnalysis(List<Sentence> sentences)
@@ -110,6 +111,11 @@ public partial class InspectPhrase : Page, INotifyPropertyChanged
         WordsAnalysis = wordsAnalyses;
         
         OnPropertyChanged(nameof(WordsAnalysis));
+    }
+
+    private void LoadRules()
+    {
+        _rules = _rulesService.GetRules();
     }
 }
 

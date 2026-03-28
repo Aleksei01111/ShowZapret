@@ -46,6 +46,13 @@ internal partial class ShowZapretDbContext : DbContext
         modelBuilder.Entity<Rule>(entity =>
         {
             entity.ToTable("Rule");
+            entity.HasIndex(r => r.NameOfRule)
+                .IsUnique();
+            entity.Property(r => r.NameOfRule)
+                .IsRequired();
+
+            entity.Property(r => r.TriggerWord)
+                .IsRequired();
         });
 
         modelBuilder.Entity<User>(entity =>

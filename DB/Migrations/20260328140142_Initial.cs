@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace DB.Entities
+namespace DB.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -54,7 +54,7 @@ namespace DB.Entities
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NameOfRule = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NameOfRule = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TriggerWord = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TriggerWordMatchThreshold = table.Column<double>(type: "float", nullable: false),
                     UserCreatorId = table.Column<int>(type: "int", nullable: false),
@@ -80,6 +80,12 @@ namespace DB.Entities
                 name: "IX_Note_UserId",
                 table: "Note",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rule_NameOfRule",
+                table: "Rule",
+                column: "NameOfRule",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rule_UserCreatorId",

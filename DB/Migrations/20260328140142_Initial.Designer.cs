@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DB.Entities
+namespace DB.Migrations
 {
     [DbContext(typeof(ShowZapretDbContext))]
-    [Migration("20260319100950_Initial")]
+    [Migration("20260328140142_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -66,7 +66,7 @@ namespace DB.Entities
 
                     b.Property<string>("NameOfRule")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RightWordNext")
                         .HasColumnType("nvarchar(max)");
@@ -91,6 +91,9 @@ namespace DB.Entities
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("NameOfRule")
+                        .IsUnique();
 
                     b.HasIndex("UserCreatorId");
 
