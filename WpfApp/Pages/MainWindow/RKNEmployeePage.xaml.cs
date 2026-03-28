@@ -7,6 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using DB.Entities;
 using DB.Service;
+using TextProcess;
+using Zapret;
 
 namespace WpfApp.Pages.MainWindow;
 
@@ -17,9 +19,12 @@ public partial class RKNEmployeePage : Page, INotifyPropertyChanged
     private RulesService _rulesService = new();
 
     private Rule _selectedRule;
+    private string _inputTestText;
     
     public ObservableCollection<Rule> Rules { get; private set; } = new();
 
+    public Dictionary<Sentence, List<WordAnalysisResult>> WordsAnalysisForTestText { get; private set; } = new();
+    
     public Rule SelectedRule
     {
         get => _selectedRule;
@@ -27,6 +32,16 @@ public partial class RKNEmployeePage : Page, INotifyPropertyChanged
         {
             _selectedRule = value;
             OnPropertyChanged(nameof(SelectedRule));
+        }
+    }
+
+    public string InputTestText
+    {
+        get => _inputTestText;
+        set
+        {
+            _inputTestText = value;
+            OnPropertyChanged(nameof(InputTestText));
         }
     }
     
@@ -102,6 +117,16 @@ public partial class RKNEmployeePage : Page, INotifyPropertyChanged
         {
             MessageBox.Show(ex.Message);
         }
+    }
+
+    private void CheckTestInputTextForSelectedRule_OnClick(object sender, RoutedEventArgs e)
+    {
+        var sentences = new TextParser(_inputTestText, ['.', '?', '!'], [' ', ',']).Parse();
+        var textAnalyze = new SentencesAnalyzer([SelectedRule]);
+        var wordsAnalyses = textAnalyze.AnalyzeText(sentences);
+        WordsAnalysisForTestText = wordsAnalyses;
+        
+        OnPropertyChanged(nameof(WordsAnalysisForTestText));
     }
 }
 

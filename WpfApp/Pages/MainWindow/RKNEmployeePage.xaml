@@ -10,6 +10,7 @@
       Title="RKNEmployeePage" d:DesignHeight="450" d:DesignWidth="800">
     <Page.Resources>
         <local:SelectedElementToIsEnableConverter x:Key="SelectedVisibility"/>
+        <local:WordAnalysisVerdictToBrushConverter x:Key="CleanWordAnalysisVerdict"/>
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -20,10 +21,12 @@
         
         <Grid.RowDefinitions>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
             <RowDefinition Height="0.22*"/>
         </Grid.RowDefinitions>
         
-        <ListBox Grid.Column="0" ItemsSource="{Binding Rules}"
+        <ListBox Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" ItemsSource="{Binding Rules}"
                  SelectedItem="{Binding SelectedRule}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -37,7 +40,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
         
-        <StackPanel Grid.Column="0" Grid.Row="1">
+        <StackPanel Grid.Column="0" Grid.Row="3">
             <Button Content="Добавить" 
                     Style="{StaticResource Button1}" Click="AddNewRule_OnClick"/>
             <Button Content="Обновить"
@@ -45,7 +48,7 @@
                     Click="RefreshRules_OnClick"/>
         </StackPanel>
         
-        <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Width="3" HorizontalAlignment="Stretch"/>
+        <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" Width="3" HorizontalAlignment="Stretch"/>
         
         <ScrollViewer Grid.Column="2" Grid.Row="0" 
                       IsEnabled="{Binding SelectedRule,
@@ -88,7 +91,45 @@
             </StackPanel>
         </ScrollViewer>
         
-        <StackPanel Grid.Row="1" Grid.Column="2"
+        <GridSplitter Grid.Column="2" Grid.Row="1" Height="3" HorizontalAlignment="Stretch"/>
+        
+        <Grid Grid.Column="2" Grid.Row="2" 
+              IsEnabled="{Binding SelectedRule, 
+              Converter={StaticResource SelectedVisibility}}">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <uControls:MultilineTextWithPlaceholder Grid.Row="0" 
+                Placeholder="Текст" 
+                Text="{Binding InputTestText}"/>
+            
+            <ScrollViewer Grid.Row="1">
+                <ItemsControl ItemsSource="{Binding WordsAnalysisForTestText}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ItemsControl ItemsSource="{Binding Value}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate><WrapPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate><DataTemplate>
+                                    <TextBlock Text="{Binding Target.Value}" 
+                                               Style="{StaticResource Word}"
+                                               Background="{Binding Verdict, Converter={StaticResource CleanWordAnalysisVerdict}}"/>
+                                </DataTemplate></ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            
+            <Button Grid.Row="2" Content="Проверить" Click="CheckTestInputTextForSelectedRule_OnClick"
+                    Style="{StaticResource SmallButton}" HorizontalAlignment="Left"/>
+        </Grid>
+        
+        <StackPanel Grid.Row="3" Grid.Column="2"
                     IsEnabled="{Binding SelectedRule,
                      Converter={StaticResource SelectedVisibility}}">
             <Button Content="Сохранить"
