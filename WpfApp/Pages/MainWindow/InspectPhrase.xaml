@@ -5,11 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:uControls="clr-namespace:WpfApp.UserControl"
       xmlns:local="clr-namespace:WpfApp.Pages.MainWindow"
+      xmlns:converters="clr-namespace:WpfApp.Converters"
       mc:Ignorable="d" d:DesignHeight="200" d:DesignWidth="400"
       Title="Проверить текст"
       d:DataContext="{d:DesignInstance Type=local:InspectPhrase, IsDesignTimeCreatable=True}">
     <Page.Resources>
-        <local:WordAnalysisVerdictToBrushConverter x:Key="CleanWordAnalysisVerdict"/>
+        <converters:WordAnalysisVerdictToBrushConverter x:Key="CleanWordAnalysisVerdict"/>
+        <converters:WordAnalyzeVerdictVisibilityConverter x:Key="WordAnalyzeVerdictVisibility"/>
+        <converters:WordAnalysisResultToFormatStringConverter x:Key="WordAnalyzeFormatString"/>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -38,7 +41,13 @@
                             <ItemsControl.ItemTemplate><DataTemplate>
                                 <TextBlock Text="{Binding Target.Value}" 
                                            Style="{StaticResource Word}"
-                                           Background="{Binding Verdict, Converter={StaticResource CleanWordAnalysisVerdict}}"/>
+                                           Background="{Binding Verdict, Converter={StaticResource CleanWordAnalysisVerdict}}">
+                                    <TextBlock.ToolTip>
+                                        <ToolTip Visibility="{Binding Verdict, Converter={StaticResource WordAnalyzeVerdictVisibility}}">
+                                            <TextBlock Text="{Binding Converter={StaticResource WordAnalyzeFormatString}}"/>
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
                             </DataTemplate></ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </DataTemplate>
