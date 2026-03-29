@@ -19,6 +19,11 @@ public partial class MultilineTextWithPlaceholder
             new FrameworkPropertyMetadata(
                 string.Empty, 
                 FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+    public static readonly DependencyProperty IsReadOnlyProperty =
+        DependencyProperty.Register(nameof(IsReadOnly),
+            typeof(bool),
+            typeof(MultilineTextWithPlaceholder));
     
     public string Placeholder
     {
@@ -30,6 +35,12 @@ public partial class MultilineTextWithPlaceholder
     {
         get => (string)GetValue(TextProperty);
         set => SetValue(TextProperty, value);
+    }
+
+    public bool IsReadOnly
+    {
+        get => (bool)GetValue(IsReadOnlyProperty);
+        set => SetValue(IsReadOnlyProperty, value);
     }
     
     public MultilineTextWithPlaceholder()

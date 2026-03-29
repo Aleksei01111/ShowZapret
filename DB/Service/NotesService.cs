@@ -1,5 +1,6 @@
 ﻿using DB.Context;
 using DB.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DB.Service;
 
@@ -15,7 +16,11 @@ public class NotesService
     }
     
     public List<Note> GetNotesForUser(User user) => 
-        _context.Notes.Where(n => n.User.Login == user.Login).ToList();
+        _context.Notes.Include(n => n.User)
+            .Where(n => n.User.Login == user.Login).ToList();
+    
+    public List<Note> GetAllNotes() => _context.Notes.
+        Include(n => n.User).ToList();
     
     public void ClearAllNotes()
     {

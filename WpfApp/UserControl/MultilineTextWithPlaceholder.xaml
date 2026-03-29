@@ -18,6 +18,8 @@
         <TextBox Grid.Column="1" Style="{StaticResource Text}" Text="{Binding Text, 
                  RelativeSource={RelativeSource AncestorType={x:Type local:MultilineTextWithPlaceholder}}, 
                  UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" AcceptsTab="True"
-                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextWrapping="Wrap"/>
+                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextWrapping="Wrap"
+                 IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl},
+                 Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </UserControl>

@@ -47,6 +47,9 @@ public partial class MainWindow : INotifyPropertyChanged
         
         if(_user.Role is User.UserRole.RKNEmployee)
             Pages.Add(new MainPageViewModel(new RKNEmployeePage(_user), "Для РКН работников"));
+
+        if (_user.Role == User.UserRole.Mizulina)
+            Pages.Add(new MainPageViewModel(new MizulinaPage(_user), "Мизулина"));
         
         if(Pages.Count > 0)
             SelectedPage = Pages[0];

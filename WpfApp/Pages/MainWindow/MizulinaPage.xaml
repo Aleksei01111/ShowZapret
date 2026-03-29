@@ -1,0 +1,67 @@
+﻿<Page x:Class="WpfApp.Pages.MainWindow.MizulinaPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:uControls="clr-namespace:WpfApp.UserControl"
+      xmlns:local="clr-namespace:WpfApp.Pages.MainWindow"
+      mc:Ignorable="d" d:DataContext="{d:DesignInstance local:MizulinaPage, IsDesignTimeCreatable=True}"
+      Title="MizulinaPage" d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <Button Content="Обновить список" Style="{StaticResource SmallButton}" Click="RefreshNotes_OnClick"/>
+        
+        <GridSplitter Grid.Row="1" Grid.Column="1" Width="3" HorizontalAlignment="Stretch"/>
+        
+        <ListBox Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Notes}" SelectedItem="{Binding SelectedNote}">
+            <ListBox.ItemTemplate><DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Text}" MaxWidth="150" 
+                               TextTrimming="CharacterEllipsis" Style="{StaticResource PlaceholderText}"/>
+                </StackPanel>
+            </DataTemplate></ListBox.ItemTemplate>
+        </ListBox>
+        
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="0.4*"/>
+            </Grid.RowDefinitions>
+            
+            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                <uControls:MultilineTextWithPlaceholder 
+                    Placeholder="Текст" 
+                    Text="{Binding SelectedNote.Text}"
+                    IsReadOnly="True"/>
+            </ScrollViewer>
+            
+            <StackPanel Grid.Row="1">
+                <uControls:TextBoxWithPlaceholder 
+                    Placeholder="Логин пользователя"
+                    Text="{Binding SelectedNote.User.Login}"
+                    IsReadOnly="True"/>
+                <uControls:TextBoxWithPlaceholder
+                    Placeholder="Адрес пользователя"
+                    Text="{Binding SelectedNote.User.Address}"
+                    IsReadOnly="True"/>
+                <uControls:TextBoxWithPlaceholder
+                    Placeholder="Дата"
+                    Text="{Binding SelectedNote.Date}"
+                    IsReadOnly="True"/>
+            </StackPanel>
+                
+            <Button Grid.Row="2" Content="Написать донос" Style="{StaticResource Button1}" Click="MakeReport_OnClick"/>
+        </Grid>
+    </Grid>
+</Page>
