@@ -4,9 +4,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace WpfApp.UserControl;
+namespace GeneralElementsZapretUI.UserControls;
 
-public partial class PasswordBoxWithPlaceholder : System.Windows.Controls.UserControl, INotifyPropertyChanged
+public partial class PasswordBoxWithPlaceholder : UserControl, INotifyPropertyChanged
 {
     private string _password;
     private string _placeholder;

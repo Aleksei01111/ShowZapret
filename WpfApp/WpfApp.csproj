@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\DB\DB.csproj" />
+      <ProjectReference Include="..\GeneralElementsZapretUI\GeneralElementsZapretUI.csproj" />
       <ProjectReference Include="..\Zapret\Zapret.csproj" />
     </ItemGroup>
 

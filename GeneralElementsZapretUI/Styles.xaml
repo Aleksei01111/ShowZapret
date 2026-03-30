@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:userControls="clr-namespace:WpfApp.UserControl">
+                    xmlns:userControls="clr-namespace:GeneralElementsZapretUI.UserControls">
                     
     <Style x:Key="PlaceholderText" TargetType="TextBlock">
         <Setter Property="FontSize" Value="14"/>

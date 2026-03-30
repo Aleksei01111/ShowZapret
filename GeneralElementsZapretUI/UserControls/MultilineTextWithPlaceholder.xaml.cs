@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace WpfApp.UserControl;
+namespace GeneralElementsZapretUI.UserControls;
 
-public partial class MultilineTextWithPlaceholder
+public partial class MultilineTextWithPlaceholder : UserControl
 {
     public static readonly DependencyProperty PlaceholderProperty =
         DependencyProperty.Register(

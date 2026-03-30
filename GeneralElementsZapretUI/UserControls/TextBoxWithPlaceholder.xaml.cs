@@ -1,11 +1,9 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace WpfApp.UserControl;
+namespace GeneralElementsZapretUI.UserControls;
 
-public partial class TextBoxWithPlaceholder : System.Windows.Controls.UserControl
+public partial class TextBoxWithPlaceholder : UserControl
 {
     private string _placeholder;
     private string _text;
