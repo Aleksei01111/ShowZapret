@@ -9,6 +9,7 @@ namespace WpfApp.Pages.MainWindow;
 
 public partial class MizulinaPage : Page, INotifyPropertyChanged
 {
+    private User _user;
     private NotesService _notesService = new();
 
     private Note _selectedNote; 
@@ -27,6 +28,8 @@ public partial class MizulinaPage : Page, INotifyPropertyChanged
 
     public MizulinaPage(User user)
     {
+        _user = user;
+        
         InitializeComponent();
 
         DataContext = this;
@@ -47,7 +50,7 @@ public partial class MizulinaPage : Page, INotifyPropertyChanged
 
     private void MakeReport_OnClick(object sender, RoutedEventArgs e)
     {
-        throw new NotImplementedException();
+        new Window.CreateDonosWindow(SelectedNote, _user).ShowDialog();
     }
 
     private void RefreshNotes_OnClick(object sender, RoutedEventArgs e)
