@@ -24,9 +24,10 @@
 
     <ItemGroup>
       <None Remove="Resources\Images\eye.png" />
-      <Resource Include="Resources\Images\eye.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Resource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Resources\" />
     </ItemGroup>
 
 </Project>

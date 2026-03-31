@@ -16,7 +16,8 @@ public class WordAnalysisResult(Word target, Sentence sentence, List<Rule> rules
     {
         Clean,
         Violation,
-        Exempted
+        Exempted,
+        ViolationWithNegativeValue,
     }
 
     public Word Target { get; } = target;
@@ -43,11 +44,24 @@ public class WordAnalysisResult(Word target, Sentence sentence, List<Rule> rules
         
         PreviousRightWord = previousRightWord;
         NextRightWord = nextRightWord;
-        
+
         if (checkResult)
-            Verdict = VerdictType.Exempted;
+        {
+            if(ViolationRule.FreedomPunishInMonth < 0 || ViolationRule.MoneyPunishmentInRubles < 0)
+                Verdict = VerdictType.ViolationWithNegativeValue;
+            else
+                Verdict = VerdictType.Exempted;
+        }
         else
-            Verdict = VerdictType.Violation;
+        {
+            if ((ViolationRule.RightWordNext == null && ViolationRule.RightWordPrevious == null) &&
+                (ViolationRule.FreedomPunishInMonth < 0 || ViolationRule.MoneyPunishmentInRubles < 0))
+                Verdict = VerdictType.ViolationWithNegativeValue;
+            else if(!(ViolationRule.FreedomPunishInMonth < 0 || ViolationRule.MoneyPunishmentInRubles < 0))
+                Verdict = VerdictType.Violation;
+            else
+                Verdict = VerdictType.Clean;
+        }
     }
 }
 

@@ -13,7 +13,7 @@ public class WordAnalysisResultToFormatStringConverter : IValueConverter
         if (valueAsWordAnalysis == null || valueAsWordAnalysis.Verdict == WordAnalysisResult.VerdictType.Clean)
             return "";
         
-        var resStr = $"{valueAsWordAnalysis.ViolationRule.NameOfRule}";
+        var resStr = $"Правило нарушено: {valueAsWordAnalysis.ViolationRule.NameOfRule}";
 
         if (valueAsWordAnalysis.Verdict == WordAnalysisResult.VerdictType.Exempted)
         {
@@ -24,6 +24,9 @@ public class WordAnalysisResultToFormatStringConverter : IValueConverter
                 resStr += $"Слово до: {valueAsWordAnalysis.PreviousRightWord}\n";
 
         }
+
+        if (valueAsWordAnalysis.Verdict == WordAnalysisResult.VerdictType.ViolationWithNegativeValue)
+            resStr += "\nНо вы вообще крутой если честно";
         return resStr;
     }
 

@@ -14,7 +14,7 @@ public class PunishmentCalculator(List<List<WordAnalysisResult>> words)
         {
             foreach (var wordAnalysisResult in wordAnalysisResultSentence)
             {
-                if (wordAnalysisResult.Verdict == verdictFilter && wordAnalysisResult.ViolationRule != null)
+                if (wordAnalysisResult.Verdict != WordAnalysisResult.VerdictType.Clean && wordAnalysisResult.ViolationRule != null)
                 {
                     res.finalFreedomPunishmentInMonth += wordAnalysisResult.ViolationRule.FreedomPunishInMonth;
                     res.finalMoneyPunishment += wordAnalysisResult.ViolationRule.MoneyPunishmentInRubles;
@@ -22,6 +22,11 @@ public class PunishmentCalculator(List<List<WordAnalysisResult>> words)
             }
         }
 
+        if (res.finalFreedomPunishmentInMonth < 0)
+            res.finalFreedomPunishmentInMonth = 0;
+        if(res.finalMoneyPunishment < 0)
+            res.finalMoneyPunishment = 0;
+        
         return res;
     }
 }

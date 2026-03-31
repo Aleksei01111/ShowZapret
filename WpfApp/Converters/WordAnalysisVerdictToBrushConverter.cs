@@ -7,9 +7,10 @@ namespace WpfApp.Converters;
 
 public class WordAnalysisVerdictToBrushConverter : IValueConverter
 {
-    private SolidColorBrush _cleanWordAnalysisColor = new SolidColorBrush(Colors.LightGreen);
-    private SolidColorBrush _exemptedWordAnalysisColor = new SolidColorBrush(Colors.LightYellow);
-    private SolidColorBrush _violationWordAnalysisColor = new SolidColorBrush(Colors.LightCoral);
+    private readonly SolidColorBrush _cleanWordAnalysisColor = new SolidColorBrush(Colors.LightGreen);
+    private readonly SolidColorBrush _exemptedWordAnalysisColor = new SolidColorBrush(Colors.LightYellow);
+    private readonly SolidColorBrush _violationWordAnalysisColor = new SolidColorBrush(Colors.LightCoral);
+    private readonly SolidColorBrush _violationWithNegativeValueWordAnalysisColor = new SolidColorBrush(Colors.LightPink);
     
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
@@ -21,6 +22,8 @@ public class WordAnalysisVerdictToBrushConverter : IValueConverter
             return _exemptedWordAnalysisColor;
         if(convertedValue == WordAnalysisResult.VerdictType.Violation)
             return _violationWordAnalysisColor;
+        if(convertedValue == WordAnalysisResult.VerdictType.ViolationWithNegativeValue)
+            return _violationWithNegativeValueWordAnalysisColor;
         
         return null;
     }
@@ -35,6 +38,8 @@ public class WordAnalysisVerdictToBrushConverter : IValueConverter
             return WordAnalysisResult.VerdictType.Exempted;
         if(convertedValue == _violationWordAnalysisColor.Color)
             return WordAnalysisResult.VerdictType.Violation;
+        if(convertedValue == _violationWithNegativeValueWordAnalysisColor.Color)
+            return WordAnalysisResult.VerdictType.ViolationWithNegativeValue;
         
         return null;
     }

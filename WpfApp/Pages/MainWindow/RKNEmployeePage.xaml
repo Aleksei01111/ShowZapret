@@ -24,7 +24,7 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
-            <RowDefinition Height="0.22*"/>
+            <RowDefinition Height="0.44*"/>
         </Grid.RowDefinitions>
         
         <ListBox Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" ItemsSource="{Binding Rules}"
