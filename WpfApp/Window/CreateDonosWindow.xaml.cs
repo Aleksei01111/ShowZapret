@@ -11,14 +11,16 @@ public partial class CreateDonosWindow
     private User _sender;
     private List<IStepPage> _stepPages = new();
 
-    /// TODO
-    private string _textOfDonos = "todo";
+    private DateTime _reportCreationDate = DateTime.Now;
+    
+    private string _textOfDonos;
     
     public CreateDonosWindow(Note note, User sender)
     {
         _sender = sender;
         
-        var finalStepPage = new FinalStepPage(OnStepsDialogsDone, null);
+        var reallyFinalStepPage = new ReallyFinalStepPage(OnStepsDialogsDone, null);
+        var finalStepPage = new FinalStepPage(OnStepsDialogsDone, reallyFinalStepPage);
         var firstStepPage = new ConfirmLoginStepPage(OnStepsDialogsDone, finalStepPage);
         
         InitializeComponent();
@@ -26,6 +28,12 @@ public partial class CreateDonosWindow
         DataContext = this;
 
         StepsFrame.Navigate(firstStepPage.ThisPage);
+
+        _textOfDonos =
+            "Я - мизулина екатирина екатериновна хочу сообщить о неподабающем поведении и привечь к ответственности всех причастных к данному тексту (см ниже).\n" +
+            $"Дата: {_reportCreationDate}\n" +
+            $"Учетная запись: {_sender.Login}\n" +
+            $"Текст: {note.Text}";
     }
 
     private void OnStepsDialogsDone(IStepPage thisPage)
@@ -44,13 +52,16 @@ public partial class CreateDonosWindow
                 senderMizulina.Role.Id = 0;
                 var report = new DB.External.EntitiesExternal.Report
                 {
-                    Date = DateTime.Now,
+                    Date = _reportCreationDate,
                     UserSender = senderMizulina,
                     Text = _textOfDonos,
                 };
                 new ReportService().SendReport(report);
 
+                new PopUpWindow(_textOfDonos).ShowDialog();
+                
                 MessageBox.Show("Отчет отправлен");
+                DialogResult = true;
             }
             catch (Exception ex)
             {

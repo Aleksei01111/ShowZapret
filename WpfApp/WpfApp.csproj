@@ -27,7 +27,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Resources\" />
+      <None Remove="Resources\Images\смешной шаман с флагом.jpg" />
+      <Resource Include="Resources\Images\смешной шаман с флагом.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Resources\Images\флаг россии.gif" />
+      <Resource Include="Resources\Images\флаг россии.gif">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
     </ItemGroup>
 
 </Project>

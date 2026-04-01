@@ -1,0 +1,13 @@
+﻿<Page x:Class="WpfApp.Pages.CreateDonos.ReallyFinalStepPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:WpfApp.Pages.CreateDonos"
+      mc:Ignorable="d"
+      Title="ReallyFinalStepPage" Height="450" Width="800"
+      Loaded="ReallyFinalStepPage_OnLoaded">
+    <Grid>
+        <Image Stretch="Fill" Width="300" Source="../../Resources/Images/смешной шаман с флагом.jpg"/>
+    </Grid>
+</Page>

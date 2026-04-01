@@ -13,7 +13,12 @@ public class WordAnalysisResultToFormatStringConverter : IValueConverter
         if (valueAsWordAnalysis == null || valueAsWordAnalysis.Verdict == WordAnalysisResult.VerdictType.Clean)
             return "";
         
-        var resStr = $"Правило нарушено: {valueAsWordAnalysis.ViolationRule.NameOfRule}";
+        var resStr = "";
+        
+        if(valueAsWordAnalysis.Verdict == WordAnalysisResult.VerdictType.ViolationWithNegativeValue)
+            resStr = $"Хорошее правило было выполнено: {valueAsWordAnalysis.ViolationRule.NameOfRule}";
+        else
+            resStr = $"Правило нарушено: {valueAsWordAnalysis.ViolationRule.NameOfRule}";
 
         if (valueAsWordAnalysis.Verdict == WordAnalysisResult.VerdictType.Exempted)
         {
