@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
 using DB.Entities;
 using WpfApp.Pages.MainWindow;
@@ -32,7 +33,7 @@ public partial class MainWindow : INotifyPropertyChanged
         if (authorizationWindow.ShowDialog() != true)
             Close();
         authorizationWindow.Close();
-
+        
         InitializeComponent();
         DataContext = this;
         

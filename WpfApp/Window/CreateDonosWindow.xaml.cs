@@ -1,16 +1,23 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using DB.Entities;
+using DB.External.Service;
 using WpfApp.Pages.CreateDonos;
 
 namespace WpfApp.Window;
 
 public partial class CreateDonosWindow
 {
+    private User _sender;
     private List<IStepPage> _stepPages = new();
+
+    /// TODO
+    private string _textOfDonos = "todo";
     
     public CreateDonosWindow(Note note, User sender)
     {
+        _sender = sender;
+        
         var finalStepPage = new FinalStepPage(OnStepsDialogsDone, null);
         var firstStepPage = new ConfirmLoginStepPage(OnStepsDialogsDone, finalStepPage);
         
@@ -26,11 +33,29 @@ public partial class CreateDonosWindow
         if (thisPage.NextPage is not null)
         {
             StepsFrame.Navigate(thisPage.NextPage.ThisPage);
-            MessageBox.Show("Следщ");
         }
         else
         {
-            MessageBox.Show("Это конец");
+            try
+            {
+                var userServiceLayer = new DB.External.Service.UserServiceLayer();
+                var senderMizulina = userServiceLayer.GetUserMizulina(_sender);
+                senderMizulina.Id = 0;
+                senderMizulina.Role.Id = 0;
+                var report = new DB.External.EntitiesExternal.Report
+                {
+                    Date = DateTime.Now,
+                    UserSender = senderMizulina,
+                    Text = _textOfDonos,
+                };
+                new ReportService().SendReport(report);
+
+                MessageBox.Show("Отчет отправлен");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

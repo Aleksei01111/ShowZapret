@@ -7,6 +7,6 @@
       mc:Ignorable="d"
       Title="FinalStepPage" Height="450" Width="800">
     <Grid>
-        
+        <Button Content="Завершить" Style="{StaticResource Button1}" Click="Done_OnClick"/>
     </Grid>
 </Page>
