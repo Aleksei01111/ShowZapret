@@ -48,8 +48,8 @@ public partial class CreateDonosWindow
             {
                 var userServiceLayer = new DB.External.Service.UserServiceLayer();
                 var senderMizulina = userServiceLayer.GetUserMizulina(_sender);
-                senderMizulina.Id = 0;
-                senderMizulina.Role.Id = 0;
+                // senderMizulina.Id = 0;
+                // senderMizulina.Role.Id = 0;
                 var report = new DB.External.EntitiesExternal.Report
                 {
                     Date = _reportCreationDate,
