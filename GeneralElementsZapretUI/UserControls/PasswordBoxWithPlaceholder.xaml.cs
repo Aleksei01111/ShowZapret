@@ -8,9 +8,6 @@ namespace GeneralElementsZapretUI.UserControls;
 
 public partial class PasswordBoxWithPlaceholder : UserControl, INotifyPropertyChanged
 {
-    private string _password;
-    private string _placeholder;
-
     public static readonly DependencyProperty PlaceholderProperty = DependencyProperty.Register(
         nameof(Placeholder), typeof(string), typeof(PasswordBoxWithPlaceholder), new PropertyMetadata(default(string)));
 

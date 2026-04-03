@@ -22,6 +22,11 @@
         <Setter Property="FontSize" Value="14"/>
     </Style>
     
+    <Style x:Key="ComboBox" TargetType="ComboBox">
+        <Setter Property="Margin" Value="5 0 0 0"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+    
     <Style x:Key="Password" TargetType="PasswordBox">
         <Setter Property="Margin" Value="5 0 0 0"/>
         <Setter Property="FontSize" Value="14"/>
@@ -60,6 +65,10 @@
     </Style>
     
     <Style TargetType="userControls:TextBoxWithPlaceholder">
+        <Setter Property="Margin" Value="0 10 0 10"/>
+    </Style>
+    
+    <Style TargetType="userControls:ComboBoxWithPlaceholder">
         <Setter Property="Margin" Value="0 10 0 10"/>
     </Style>
     
