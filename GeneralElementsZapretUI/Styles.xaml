@@ -16,6 +16,12 @@
         <Setter Property="MaxWidth" Value="200"/>
     </Style>
     
+    <Style x:Key="PlaceholderWithTrimming" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+        <Setter Property="MaxWidth" Value="200"/>
+    </Style>
+    
     <Style x:Key="Word" TargetType="TextBlock">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Margin" Value="5 0 5 0"/>
