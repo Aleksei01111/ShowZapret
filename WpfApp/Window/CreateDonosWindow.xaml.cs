@@ -44,29 +44,31 @@ public partial class CreateDonosWindow
         }
         else
         {
-            try
-            {
-                var userServiceLayer = new DB.External.Service.UserServiceLayer();
-                var senderMizulina = userServiceLayer.GetUserMizulina(_sender);
-                // senderMizulina.Id = 0;
-                // senderMizulina.Role.Id = 0;
-                var report = new DB.External.EntitiesExternal.Report
-                {
-                    Date = _reportCreationDate,
-                    UserSender = senderMizulina,
-                    Text = _textOfDonos,
-                };
-                new ReportService().SendReport(report);
+            new EditablePopUpWindow(_textOfDonos, ReportEditEnd).ShowDialog();
+            DialogResult = true;
+        }
+    }
 
-                new PopUpWindow(_textOfDonos).ShowDialog();
-                
-                MessageBox.Show("Отчет отправлен");
-                DialogResult = true;
-            }
-            catch (Exception ex)
+    private void ReportEditEnd(string resultText)
+    {
+        try
+        {
+            var userServiceLayer = new DB.External.Service.UserServiceLayer();
+            var senderMizulina = userServiceLayer.GetUserMizulina(_sender);
+            var report = new DB.External.EntitiesExternal.Report
             {
-                MessageBox.Show(ex.Message);
-            }
+                Date = _reportCreationDate,
+                UserSender = senderMizulina,
+                Text = resultText,
+            };
+            new ReportService().SendReport(report);
+
+                
+            MessageBox.Show("Отчет отправлен");
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
         }
     }
 }
