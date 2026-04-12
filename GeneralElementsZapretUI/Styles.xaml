@@ -37,6 +37,11 @@
         <Setter Property="FontSize" Value="14"/>
     </Style>
     
+    <Style x:Key="DateTimePicker" TargetType="DatePicker">
+        <Setter Property="Margin" Value="5 0 0 0"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+    
     <Style x:Key="Password" TargetType="PasswordBox">
         <Setter Property="Margin" Value="5 0 0 0"/>
         <Setter Property="FontSize" Value="14"/>
