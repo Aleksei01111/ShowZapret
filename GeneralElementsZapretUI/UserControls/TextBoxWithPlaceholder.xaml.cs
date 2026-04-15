@@ -5,9 +5,6 @@ namespace GeneralElementsZapretUI.UserControls;
 
 public partial class TextBoxWithPlaceholder : UserControl
 {
-    private string _placeholder;
-    private string _text;
-
     public static readonly DependencyProperty PlaceholderProperty =
         DependencyProperty.Register(
             nameof(Placeholder),
