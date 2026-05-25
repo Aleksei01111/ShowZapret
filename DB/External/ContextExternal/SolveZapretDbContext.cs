@@ -25,7 +25,12 @@ public partial class SolveZapretDbContext : DbContext
     public virtual DbSet<UserRole> UserRoles { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=192.168.88.44;Database=SolveZapret;User Id=isp-223;Password=isp-223;TrustServerCertificate=True;MultipleActiveResultSets=True;");
+    {
+        // optionsBuilder.UseSqlServer(
+        //     "Server=192.168.88.44;Database=SolveZapret;User Id=isp-223;Password=isp-223;TrustServerCertificate=True;MultipleActiveResultSets=True;");
+        optionsBuilder.UseSqlServer(
+            "Server=localhost;Database=SolveZapret;User Id=1234;Password=1234;TrustServerCertificate=True;MultipleActiveResultSets=True;");
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

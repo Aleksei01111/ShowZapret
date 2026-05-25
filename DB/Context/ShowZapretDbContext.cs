@@ -24,11 +24,11 @@ internal partial class ShowZapretDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(
-            "Server=192.168.88.44;Database=ShowZapret;User Id=isp-223;Password=isp-223;TrustServerCertificate=True;MultipleActiveResultSets=True;");
-        
         // optionsBuilder.UseSqlServer(
-        //     "Server=localhost;Database=ShowZapret;User Id=1234;Password=1234;TrustServerCertificate=True;MultipleActiveResultSets=True;");
+        //     "Server=192.168.88.44;Database=ShowZapret;User Id=isp-223;Password=isp-223;TrustServerCertificate=True;MultipleActiveResultSets=True;");
+        
+        optionsBuilder.UseSqlServer(
+            "Server=localhost;Database=ShowZapret;User Id=1234;Password=1234;TrustServerCertificate=True;MultipleActiveResultSets=True;");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
