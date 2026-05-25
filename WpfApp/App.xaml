@@ -7,7 +7,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <!-- <ResourceDictionary Source="../../Styles/Styles.xaml"/> -->
-                <ResourceDictionary Source="pack://application:,,,/GeneralElementsZapretUI;component/Styles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/GeneralElementsUI;component/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
