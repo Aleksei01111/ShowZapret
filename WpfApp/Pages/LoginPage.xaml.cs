@@ -54,13 +54,13 @@ public partial class LoginPage : Page, INotifyPropertyChanged
     private void Login_OnClick(object sender, RoutedEventArgs e)
     {
         var foundUser = _usersService.GetUserByLoginAndPassword(Login, Password);
-
+        
         if (foundUser == null)
         {
             MessageBox.Show("Пользователь не найден", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
-
+        
         _onLoginDone(foundUser);
     }
 }

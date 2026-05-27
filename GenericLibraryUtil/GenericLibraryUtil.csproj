@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <TargetFrameworks>net10.0;net9.0;net9.0-windows</TargetFrameworks>
+        <LangVersion>13</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="GeneralElementsUI">
+        <HintPath>..\External\GeneralElementsUI\GeneralElementsUI.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\DB\DB.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -27,7 +27,7 @@ public partial class AuthorizationWindow : System.Windows.Window
 
         MainFrame.Navigate(_loginPage);
     }
-
+    
     private void Register_OnClick(object sender, RoutedEventArgs e)
     {
         var btn = (Button)sender;

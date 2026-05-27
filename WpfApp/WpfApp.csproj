@@ -18,8 +18,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\DB\DB.csproj" />
-      <ProjectReference Include="..\GeneralElements\GeneralElementsUI\GeneralElementsUI.csproj" />
       <ProjectReference Include="..\GeneralElements\GeneralElementsZapretUI\GeneralElementsZapretUI.csproj" />
+      <ProjectReference Include="..\GenericLibraryUtil\GenericLibraryUtil.csproj" />
       <ProjectReference Include="..\Zapret\Zapret.csproj" />
     </ItemGroup>
 
@@ -36,6 +36,12 @@
       <Resource Include="Resources\Images\флаг россии.gif">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Resource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="GeneralElementsUI">
+        <HintPath>..\External\GeneralElementsUI\GeneralElementsUI.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>
