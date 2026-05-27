@@ -17,8 +17,6 @@ public partial class MainWindow : INotifyPropertyChanged
     private MainPageViewModel _selectedPage;
 
     private UsersService _usersService = new();
-    
-    public User User => _user;
 
     public ObservableCollection<MainPageViewModel> Pages { get; } = new();
 
@@ -99,11 +97,6 @@ public partial class MainWindow : INotifyPropertyChanged
         
         if(Pages.Count > 0)
             SelectedPage = Pages[0];
-    }
-
-    private void OnAuthorizationDone(User foundUser)
-    {
-        _user = foundUser;
     }
 
     private bool TryRegisterUser(DB.Entities.User user)
